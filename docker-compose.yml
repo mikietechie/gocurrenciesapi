@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    env_file:
+      # MUST Have BEACON_KEY=xxxx
+      - .env
+    depends_on:
+      - cache
+    environment:
+      - SERVER_ADDRESS=0.0.0.0:8000
+      - REDIS_CONNECTION=cache:6379
+
+  cache:
+    restart: unless-stopped
+    image: redis:7.0.5-alpine
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"

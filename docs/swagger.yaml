@@ -1,0 +1,579 @@
+definitions:
+  api.UserToken:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/models.ReadUser'
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Client:
+    properties:
+      api_key:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      domains:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      reads_available:
+        type: integer
+      reads_used:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: integer
+    type: object
+  models.ReadUser:
+    properties:
+      active:
+        type: boolean
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      id:
+        type: integer
+      role:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.User:
+    properties:
+      active:
+        type: boolean
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      id:
+        type: integer
+      role:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  responses.Error400Response:
+    properties:
+      error: {}
+    type: object
+  structs.BeaconResponse:
+    properties:
+      meta:
+        properties:
+          code:
+            type: integer
+          disclaimer:
+            type: string
+        type: object
+      response:
+        properties:
+          base:
+            type: string
+          date:
+            type: string
+          rates:
+            additionalProperties:
+              type: number
+            type: object
+        type: object
+    type: object
+  structs.LoginPayload:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  structs.UpdateClientReadsBody:
+    properties:
+      client:
+        type: integer
+      reads:
+        type: integer
+    required:
+    - client
+    - reads
+    type: object
+  structs.UpdateUserPasswordPayload:
+    properties:
+      current_password:
+        type: string
+      new_password:
+        type: string
+      new_password_confirmation:
+        type: string
+    required:
+    - current_password
+    - new_password
+    - new_password_confirmation
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/:
+    get:
+      description: Gets Index
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Index
+      tags:
+      - Auth
+  /api/v1/auth/deactivate:
+    put:
+      description: Deactivate user
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+      security:
+      - Bearer: []
+      summary: Deactivate
+      tags:
+      - Auth
+  /api/v1/auth/login:
+    post:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: structs.LoginPayload JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.LoginPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.UserToken'
+      summary: Login
+      tags:
+      - Auth
+  /api/v1/auth/logout:
+    get:
+      description: Logout user and black list token
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+      security:
+      - Bearer: []
+      summary: Logout
+      tags:
+      - Auth
+  /api/v1/auth/password:
+    patch:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: structs.UpdateClientReadsBody JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.UpdateClientReadsBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+      security:
+      - Bearer: []
+      summary: Client
+      tags:
+      - Auth
+    put:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: structs.UpdateUserPasswordPayload JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.UpdateUserPasswordPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+      security:
+      - Bearer: []
+      summary: Password
+      tags:
+      - Auth
+  /api/v1/auth/register:
+    post:
+      description: Register and Get User with Token
+      parameters:
+      - description: models.User JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.UserToken'
+      summary: Register
+      tags:
+      - Auth
+  /api/v1/clients:
+    get:
+      description: List New Client
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Client'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: List Client
+      tags:
+      - Client
+    post:
+      description: Create New Client
+      parameters:
+      - description: models.Client JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Create Client
+      tags:
+      - Client
+  /api/v1/clients/{id}:
+    delete:
+      description: Delete Client
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Delete Client
+      tags:
+      - Client
+    get:
+      description: Expand Client
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Expand Client
+      tags:
+      - Client
+    put:
+      description: Update Client
+      parameters:
+      - description: models.Client JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.Client'
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Update Client
+      tags:
+      - Client
+  /api/v1/currencies/conversion/{toCurrency}/{fromCurrency}/{amount}:
+    get:
+      description: Gets Conversion Endpoint
+      parameters:
+      - description: To Currency
+        in: path
+        name: toCurrency
+        required: true
+        type: string
+      - description: From Currency
+        in: path
+        name: fromCurrency
+        required: true
+        type: string
+      - description: Amount
+        in: path
+        name: amount
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: number
+      security:
+      - ApiKeyAuth: []
+      summary: Conversion Endpoint
+      tags:
+      - Auth
+  /api/v1/currencies/exchange-rates:
+    get:
+      description: Gets Currencies State
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.BeaconResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Currencies State
+      tags:
+      - Auth
+  /api/v1/currencies/list:
+    get:
+      description: Gets Currencies List
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: Currencies List
+      tags:
+      - Auth
+  /api/v1/users:
+    get:
+      description: List New User
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ReadUser'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: List User
+      tags:
+      - User
+    post:
+      description: Create New User
+      parameters:
+      - description: models.User JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ReadUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Create User
+      tags:
+      - User
+  /api/v1/users/{id}:
+    delete:
+      description: Delete User
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Delete User
+      tags:
+      - User
+    get:
+      description: Expand User
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ReadUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Expand User
+      tags:
+      - User
+    put:
+      description: Update User
+      parameters:
+      - description: models.User JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ReadUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Update User
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    in: query
+    name: apikey
+    type: apiKey
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
