@@ -15,12 +15,12 @@ import (
 
 func GetAuthUser(c *gin.Context) {
 	user := middleware.GetUserFromC(c)
-	responses.JSON200(c, user.GetReadUser())
+	responses.JSON200(c, user)
 }
 
 type UserToken struct {
-	User  models.ReadUser `json:"user"`
-	Token string          `json:"token"`
+	User  models.User `json:"user"`
+	Token string      `json:"token"`
 }
 
 func returnAuthUser(c *gin.Context, user models.User) {
@@ -29,35 +29,35 @@ func returnAuthUser(c *gin.Context, user models.User) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	data := UserToken{User: user.GetReadUser(), Token: token}
+	data := UserToken{User: user, Token: token}
 	responses.JSON200(c, data)
 }
 
-// Logout             godoc
+// Logout        godoc
 // @Summary      Logout
 // @Description  Logout user and black list token
 // @Tags         Auth
 // @Success      200   {object}  bool
 // @Router       /api/v1/auth/logout [get]
-// @Security Bearer
+// @Security     Bearer
 func Logout(c *gin.Context) {
 	go services.BlackListToken(c.Value("token").(jwt.Token))
 	responses.JSON200(c, true)
 }
 
-// Deactivate             godoc
+// Deactivate    godoc
 // @Summary      Deactivate
 // @Description  Deactivate user
 // @Tags         Auth
 // @Success      200   {object}  bool
 // @Router       /api/v1/auth/deactivate [put]
-// @Security Bearer
+// @Security     Bearer
 func Deactivate(c *gin.Context) {
 	go services.DeactivateUser(middleware.GetUserFromC(c))
 	responses.JSON200(c, true)
 }
 
-// Register             godoc
+// Register      godoc
 // @Summary      Register
 // @Description  Register and Get User with Token
 // @Tags         Auth
@@ -81,7 +81,7 @@ func Register(c *gin.Context) {
 	returnAuthUser(c, user)
 }
 
-// Login             godoc
+// Login         godoc
 // @Summary      Login
 // @Description  Gets Credentials and Returns Auth Token
 // @Tags         Auth
@@ -104,7 +104,7 @@ func Login(c *gin.Context) {
 	returnAuthUser(c, user)
 }
 
-// Password             godoc
+// Password      godoc
 // @Summary      Password
 // @Description  Gets Credentials and Returns Auth Token
 // @Tags         Auth
@@ -112,7 +112,7 @@ func Login(c *gin.Context) {
 // @Param        payload  body      structs.UpdateUserPasswordPayload  true  "structs.UpdateUserPasswordPayload JSON"
 // @Success      200   {object}  bool
 // @Router       /api/v1/auth/password [put]
-// @Security Bearer
+// @Security     Bearer
 func UpdateUserPassword(c *gin.Context) {
 	var body structs.UpdateUserPasswordPayload
 	err := c.BindJSON(&body)
@@ -131,7 +131,7 @@ func UpdateUserPassword(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	var readItem *models.ReadUser
+	var readItem *models.User
 	models.Db.Model(&user).Scan(&readItem)
 	responses.JSON200(c, true)
 }

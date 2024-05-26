@@ -9,7 +9,7 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 )
 
-// List Client             godoc
+// List Client   godoc
 // @Summary      List Client
 // @Description  List New Client
 // @Tags         Client
@@ -17,7 +17,7 @@ import (
 // @Success      200   {array}  models.Client
 // @Failure      400   {object}  responses.Error400Response
 // @Router       /api/v1/clients [get]
-// @Security Bearer
+// @Security     Bearer
 func GetClients(c *gin.Context) {
 	var items []models.Client
 	err := models.Db.Model(models.Client{}).Preload("User").Find(&items).Error
@@ -69,7 +69,7 @@ func DeleteClient(c *gin.Context) {
 	responses.JSON200(c, true)
 }
 
-// Create Client             godoc
+// Create Client   godoc
 // @Summary      Create Client
 // @Description  Create New Client
 // @Tags         Client
@@ -78,7 +78,7 @@ func DeleteClient(c *gin.Context) {
 // @Success      200   {object}  models.Client
 // @Failure      400   {object}  responses.Error400Response
 // @Router       /api/v1/clients [post]
-// @Security Bearer
+// @Security     Bearer
 func CreateClient(c *gin.Context) {
 	var item *models.Client
 	err := c.BindJSON(&item)
@@ -134,7 +134,7 @@ func UpdateClient(c *gin.Context) {
 // @Param        payload  body      structs.UpdateClientReadsBody  true  "structs.UpdateClientReadsBody JSON"
 // @Success      200   {object}  models.Client
 // @Router       /api/v1/auth/password [patch]
-// @Security Bearer
+// @Security     Bearer
 func AddClientReadsAvailable(c *gin.Context) {
 	var body structs.UpdateClientReadsBody
 	err := c.BindJSON(&body)

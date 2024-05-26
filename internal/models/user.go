@@ -16,19 +16,8 @@ type User struct {
 	Active      bool   `gorm:"default:true" json:"active"`
 }
 
-type ReadUser struct {
-	User
-	Password string `gorm:"size:255;not null" json:"-"`
-}
-
 func (u User) CheckPassword(password string) bool {
 	return u.Password == utils.Hash256(password)
-}
-
-func (u *User) GetReadUser() ReadUser {
-	var ru ReadUser
-	Db.Model(&u).Scan(&ru)
-	return ru
 }
 
 func (user *User) SetPassword() {

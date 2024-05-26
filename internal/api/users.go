@@ -9,17 +9,17 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/utils"
 )
 
-// List User             godoc
+// List User     godoc
 // @Summary      List User
 // @Description  List New User
 // @Tags         User
 // @Produce      json
-// @Success      200   {array}  models.ReadUser
+// @Success      200	{array}  models.User
 // @Failure      400   {object}  responses.Error400Response
 // @Router       /api/v1/users [get]
-// @Security Bearer
+// @Security     Bearer
 func GetUsers(c *gin.Context) {
-	var items []models.ReadUser
+	var items []models.User
 	err := models.Db.Model(models.User{}).Find(&items).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
@@ -33,13 +33,13 @@ func GetUsers(c *gin.Context) {
 // @Description  Expand User
 // @Tags         User
 // @Produce      json
-// @Param        id path int true "User ID"
-// @Success      200   {object}  models.ReadUser
-// @Failure      400   {object}  responses.Error400Response
+// @Param        id	path	int	true	"User ID"
+// @Success      200	{object}	models.User
+// @Failure      400	{object}	responses.Error400Response
 // @Router       /api/v1/users/{id} [get]
 // @Security     Bearer
 func GetUser(c *gin.Context) {
-	var item models.ReadUser
+	var item models.User
 	err := models.Db.Model(models.User{}).First(&item, c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
@@ -69,16 +69,16 @@ func DeleteUser(c *gin.Context) {
 	responses.JSON200(c, true)
 }
 
-// Create User             godoc
+// Create User   godoc
 // @Summary      Create User
 // @Description  Create New User
 // @Tags         User
 // @Produce      json
 // @Param        payload  body      models.User  true  "models.User JSON"
-// @Success      200   {object}  models.ReadUser
+// @Success      200   {object}  models.User
 // @Failure      400   {object}  responses.Error400Response
 // @Router       /api/v1/users [post]
-// @Security Bearer
+// @Security     Bearer
 func CreateUser(c *gin.Context) {
 	var item *models.User
 	err := c.BindJSON(&item)
@@ -92,7 +92,7 @@ func CreateUser(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	responses.JSON200(c, item.GetReadUser())
+	responses.JSON200(c, item)
 }
 
 // Update User   godoc
@@ -102,7 +102,7 @@ func CreateUser(c *gin.Context) {
 // @Produce      json
 // @Param        payload  body      models.User  true  "models.User JSON"
 // @Param        id path int true "User ID"
-// @Success      200   {object}  models.ReadUser
+// @Success      200   {object}  models.User
 // @Failure      400   {object}  responses.Error400Response
 // @Router       /api/v1/users/{id} [put]
 // @Security     Bearer
@@ -124,7 +124,7 @@ func UpdateUser(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	responses.JSON200(c, item.GetReadUser())
+	responses.JSON200(c, item)
 }
 
 func UsersRouter(r gin.RouterGroup) {

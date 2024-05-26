@@ -15,6 +15,7 @@ func ConnectDb() {
 	var err error
 	Db, err = gorm.Open(postgres.Open(config.DATABASE_CONNECTION), &gorm.Config{})
 	if err != nil && config.DEV {
+		log.Println("Postgres Connection failed, trying SQLite")
 		Db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	}
 	if err != nil {

@@ -4,7 +4,7 @@ definitions:
       token:
         type: string
       user:
-        $ref: '#/definitions/models.ReadUser'
+        $ref: '#/definitions/models.User'
     type: object
   gorm.DeletedAt:
     properties:
@@ -38,25 +38,6 @@ definitions:
         $ref: '#/definitions/models.User'
       user_id:
         type: integer
-    type: object
-  models.ReadUser:
-    properties:
-      active:
-        type: boolean
-      createdAt:
-        type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      email:
-        type: string
-      id:
-        type: integer
-      password:
-        type: string
-      role:
-        type: string
-      updatedAt:
-        type: string
     type: object
   models.User:
     properties:
@@ -456,7 +437,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.ReadUser'
+              $ref: '#/definitions/models.User'
             type: array
         "400":
           description: Bad Request
@@ -482,7 +463,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ReadUser'
+            $ref: '#/definitions/models.User'
         "400":
           description: Bad Request
           schema:
@@ -531,7 +512,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ReadUser'
+            $ref: '#/definitions/models.User'
         "400":
           description: Bad Request
           schema:
@@ -561,7 +542,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ReadUser'
+            $ref: '#/definitions/models.User'
         "400":
           description: Bad Request
           schema:

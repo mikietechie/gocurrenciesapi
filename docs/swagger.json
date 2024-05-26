@@ -522,7 +522,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.ReadUser"
+                                "$ref": "#/definitions/models.User"
                             }
                         }
                     },
@@ -563,7 +563,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ReadUser"
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "400": {
@@ -603,7 +603,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ReadUser"
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "400": {
@@ -650,7 +650,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ReadUser"
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "400": {
@@ -709,7 +709,7 @@
                     "type": "string"
                 },
                 "user": {
-                    "$ref": "#/definitions/models.ReadUser"
+                    "$ref": "#/definitions/models.User"
                 }
             }
         },
@@ -760,35 +760,6 @@
                 },
                 "user_id": {
                     "type": "integer"
-                }
-            }
-        },
-        "models.ReadUser": {
-            "type": "object",
-            "properties": {
-                "active": {
-                    "type": "boolean"
-                },
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         },
