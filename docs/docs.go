@@ -792,6 +792,9 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "password": {
+                    "type": "string"
+                },
                 "role": {
                     "type": "string"
                 },
@@ -817,6 +820,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "password": {
+                    "type": "string"
                 },
                 "role": {
                     "type": "string"

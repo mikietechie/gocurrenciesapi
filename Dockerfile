@@ -4,9 +4,6 @@ COPY . .
 
 RUN go mod download
 
-# RUN go build -o bin/dockeredgo
+RUN go run internal/cmd/su/main.go
 
-# RUN chmod +x ./bin/dockeredgo
-
-# ENTRYPOINT [ "./bin/dockeredgo" ]
-ENTRYPOINT [ "go", "run", "src/cmd/main/main.go"]
+ENTRYPOINT [ "go", "run", "internal/main.go"]

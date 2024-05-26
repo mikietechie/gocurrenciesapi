@@ -41,7 +41,10 @@ func FetchExchangeRates() (structs.BeaconResponse, error) {
 		log.Println(err.Error())
 		return obj, err
 	}
-	cache.RDB.Set(config.CTX, RATES_KEY, string(body), time.Minute*15)
+	_, err = cache.RDB.Set(config.CTX, RATES_KEY, string(body), time.Minute*15).Result()
+	if err != nil {
+		log.Println("failed store in cache\n", err)
+	}
 	log.Println("Fetched Exchange Rates")
 	return obj, nil
 }
@@ -49,8 +52,10 @@ func FetchExchangeRates() (structs.BeaconResponse, error) {
 func GetExchangeRates() (structs.BeaconResponse, error) {
 	var obj structs.BeaconResponse
 	data, err := cache.RDB.Get(config.CTX, RATES_KEY).Result()
-	if data != "" || err != nil {
+	if data != "" && err == nil {
+		log.Println("Fetched Exchange Rates from cache")
 		json.Unmarshal([]byte(data), &obj)
+		// log.Println("data\n", data)
 		return obj, nil
 	}
 	obj, err = FetchExchangeRates()

@@ -17,7 +17,7 @@ func UpdateUserPassword(user *models.User, body structs.UpdateUserPasswordPayloa
 	if body.NewPassword != body.NewPasswordConfirmation {
 		return errors.New("passwords confirmation failed")
 	}
-	user.Password = utils.Hash256(body.NewPassword)
+	user.NewPassword = utils.Hash256(body.NewPassword)
 	err := models.Db.Save(&user).Error
 	if err != nil {
 		return errors.New("failed to save to database")
@@ -26,7 +26,7 @@ func UpdateUserPassword(user *models.User, body structs.UpdateUserPasswordPayloa
 }
 
 func UpdateUser(user *models.User, body *models.User) error {
-	body.Password = user.Password
+	body.NewPassword = user.Password
 	err := models.Db.Model(&user).Updates(body).Error
 	if err != nil {
 		return err
@@ -40,8 +40,7 @@ func DeactivateUser(user *models.User) error {
 }
 
 func CreateUser(body *models.User) (models.User, error) {
-	fmt.Println("Password is here \t:\t", body.Password)
-	body.Password = utils.Hash256(body.Password)
+	fmt.Println("Password is here \t:\t", body.NewPassword)
 	err := models.Db.Create(&body).Error
 	return *body, err
 }

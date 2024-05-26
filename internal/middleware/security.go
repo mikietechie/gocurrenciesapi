@@ -79,9 +79,10 @@ func WithClient() gin.HandlerFunc {
 		apiKey := c.Query("apikey")
 		var client *models.Client
 		log.Println("WithClient Middleware:\tapiKey", apiKey)
-		err := models.Db.Model(client).First(&client, "APIKey = ?", apiKey).Error
+		err := models.Db.Model(client).First(&client, "api_key = ?", apiKey).Error
 		if err != nil {
 			responses.JSON403(c)
+			c.Abort()
 			return
 		}
 		c.Set("client", client)

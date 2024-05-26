@@ -3,6 +3,8 @@ package models
 import (
 	"log"
 
+	"github.com/mikietechie/gocurrenciesapi/internal/config"
+	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -10,14 +12,13 @@ import (
 var Db *gorm.DB
 
 func ConnectDb() {
-	// var dsn = "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
 	var err error
-	// Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	Db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{
-		// Logger: logger.Default.LogMode(logger.Silent),
-	})
+	Db, err = gorm.Open(postgres.Open(config.DATABASE_CONNECTION), &gorm.Config{})
+	if err != nil && config.DEV {
+		Db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	}
 	if err != nil {
-		panic(err)
+		log.Fatalln("Failed to connect to database\n", err)
 	}
 	// Db.Logger.LogMode(logger.Silent)
 	Db.AutoMigrate(&User{}, &Client{}, &BlackListedToken{})

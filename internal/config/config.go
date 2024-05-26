@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/joho/godotenv"
 )
@@ -13,7 +14,24 @@ var CTX = context.Background()
 var SYS_NAME = GetEnvOrDef("SYS_NAME", "Go Currencies API")
 var SECRET_KEY = GetEnvOrDef("SECRET_KEY", "$UPER_$EXRE8!")
 
+var ENV = GetEnvOrDef("ENV", "PROD")
+var DEV = ENV == "DEV"
+
 var SERVER_ADDRESS = GetEnvOrDef("SERVER_ADDRESS", "0.0.0.0:8000")
+
+// postgres://pg:pass@localhost:5432/crud
+var dns = fmt.Sprintf(
+	"postgres://%s:%s@%s:%s/%s",
+	GetEnvOrDef("POSTGRES_USER", "postgres"),
+	GetEnvOrDef("POSTGRES_PASSWORD", "localhost"),
+	GetEnvOrDef("DB_HOST", "localhost"),
+	GetEnvOrDef("DB_PORT", "5432"),
+	GetEnvOrDef("POSTGRES_DB", "gocurrenciesapidb"),
+)
+var DATABASE_CONNECTION = GetEnvOrDef(
+	"DATABASE_CONNECTION",
+	dns,
+)
 var REDIS_CONNECTION = GetEnvOrDef("REDIS_CONNECTION", "localhost:6379")
 
 var BEACON_KEY = GetEnvOrDef("BEACON_KEY", "")

@@ -15,6 +15,9 @@ func ConnectRedis() {
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
+	if err := RDB.Ping(config.CTX).Err(); err != nil {
+		log.Fatalln("Failed to connect to redis\n", err)
+	}
 }
 
 func DisonnectRedis() {

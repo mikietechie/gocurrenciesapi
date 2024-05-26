@@ -1,4 +1,20 @@
+# docker compose -f "docker-compose.yml" up -d --build
+# docker compose -f "docker-compose.yml" down
+# docker exec -it containerid /bin/bash
+# docker exec -it postgres /bin/bash
+
 services:
+  # .env must have POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_USER
+  db:
+    image: postgres
+    volumes:
+      # - ./data/db:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+
   app:
     build:
       context: .
@@ -8,13 +24,28 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      # MUST Have BEACON_KEY=xxxx
       - .env
     depends_on:
       - cache
+      - db
     environment:
       - SERVER_ADDRESS=0.0.0.0:8000
       - REDIS_CONNECTION=cache:6379
+      - DB_HOST=db
+
+  cron:
+    build:
+      context: .
+      dockerfile: cron.Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - cache
+      - db
+    environment:
+      - SERVER_ADDRESS=0.0.0.0:8000
+      - REDIS_CONNECTION=cache:6379
+      - DB_HOST=db
 
   cache:
     restart: unless-stopped
@@ -23,3 +54,16 @@ services:
       - 6379
     ports:
       - "6379:6379"
+volumes:
+  postgres_volume:
+
+###Example .env
+## BEACON_KEY=D6CUNjH3r66zmLZa99DYI2GrlQPg6kZd
+## BEACON_BASE_CURRENCY=USD
+
+## SYS_NAME=Go Currencies API
+## SECRET_KEY=$UPER_$EXRE8!
+
+## POSTGRES_PASSWORD=$UPER_$EXRE8!DBP@$$W0RD
+## POSTGRES_DB=gocurrenciesapidb
+## POSTGRES_USER=gocurrencies

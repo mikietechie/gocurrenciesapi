@@ -33,7 +33,9 @@ func RunServer() {
 	api.UsersRouter(*api_router.Group("/users"))
 	api.ClientsRouter(*api_router.Group("/clients"))
 	api.IndexRouter(*api_router.Group("/"))
-	server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	if config.DEV {
+		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	// Run Server
 	ADDRESS := "http://" + config.SERVER_ADDRESS
 	log.Println(ADDRESS)
