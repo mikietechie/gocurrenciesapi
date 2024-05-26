@@ -1,8 +1,13 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
 
-type BlackListedToken struct {
-    gorm.Model
-    Token string `json:"token"`
+	"gorm.io/gorm"
+)
+
+type BlackToken struct {
+	gorm.Model
+	Token     string `json:"token"`
+	ExpiresAt time.Time
 }

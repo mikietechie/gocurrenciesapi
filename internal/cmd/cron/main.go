@@ -4,16 +4,23 @@ import (
 	"log"
 	"time"
 
+	"github.com/mikietechie/gocurrenciesapi/internal/initialize"
 	"github.com/mikietechie/gocurrenciesapi/internal/services"
 	"github.com/robfig/cron/v3"
 )
 
 func main() {
+	initialize.Init()
+	defer initialize.Tear()
 	log.Println("Cron jobs being Created")
 	c := cron.New()
 	c.AddFunc("@every 15m", func() {
-		log.Println("Cron: running fetch exchange rates")
+		log.Println("Cron: FetchExchangeRates")
 		services.FetchExchangeRates()
+	})
+	c.AddFunc("@every 6h", func() {
+		log.Println("Cron: ClearExpiredBlackToken")
+		services.ClearExpiredBlackToken()
 	})
 	c.Start()
 	time.Sleep(time.Minute)

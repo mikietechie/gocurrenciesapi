@@ -22,7 +22,7 @@ func ConnectDb() {
 		log.Fatalln("Failed to connect to database\n", err)
 	}
 	// Db.Logger.LogMode(logger.Silent)
-	Db.AutoMigrate(&User{}, &Client{}, &BlackListedToken{})
+	Db.AutoMigrate(&User{}, &Client{}, &BlackToken{})
 }
 
 func DisonnectDb() {

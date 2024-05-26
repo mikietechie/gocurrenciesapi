@@ -13,10 +13,10 @@ func GerateToken(str string) (string, error) {
 
 	// Create a new JWT token with claims
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": str,                                   // Subject (user identifier)
-		"iss": config.SYS_NAME,                       // Issuer
-		"exp": time.Now().Add(time.Hour * 24).Unix(), // Expiration time
-		"iat": time.Now().Unix(),                     // Issued at
+		"sub": str,                                              // Subject (user identifier)
+		"iss": config.SYS_NAME,                                  // Issuer
+		"exp": time.Now().Add(config.JWT_TOKEN_LIFETIME).Unix(), // Expiration time
+		"iat": time.Now().Unix(),                                // Issued at
 	})
 	tokenString, err := claims.SignedString([]byte(config.SECRET_KEY))
 	if err != nil {

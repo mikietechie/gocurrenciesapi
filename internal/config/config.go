@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -37,3 +38,5 @@ var REDIS_CONNECTION = GetEnvOrDef("REDIS_CONNECTION", "localhost:6379")
 var BEACON_KEY = GetEnvOrDef("BEACON_KEY", "")
 var BEACON_URL = GetEnvOrDef("BEACON_URL", "https://api.currencybeacon.com/v1")
 var BEACON_BASE_CURRENCY = GetEnvOrDef("BEACON_BASE_CURRENCY", "USD")
+
+var JWT_TOKEN_LIFETIME = time.Hour * 24

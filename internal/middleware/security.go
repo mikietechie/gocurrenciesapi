@@ -24,6 +24,9 @@ func WithAuth() gin.HandlerFunc {
 		log.Println("WithAuth Middleware:\bearerToken", bearerToken)
 		token := strings.Replace(bearerToken, "Bearer ", "", 1)
 		verifiedToken, err := utils.VerifyToken(token)
+		if err == nil {
+			err = services.CheckBlackToken(*verifiedToken)
+		}
 		if err != nil {
 			responses.JSON403(c)
 			c.Abort()

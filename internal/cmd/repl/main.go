@@ -4,4 +4,6 @@ package main
 // go run internal/cmd/repl/main.go
 // All code added to be removed after execution
 func main() {
+	// initialize.Init()
+	// defer initialize.Tear()
 }
