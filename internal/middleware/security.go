@@ -21,13 +21,13 @@ func GetUserFromC(c *gin.Context) *models.User {
 func WithAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		bearerToken := c.Request.Header.Get("Authorization")
-		log.Println("WithAuth Middleware:\bearerToken", bearerToken)
 		token := strings.Replace(bearerToken, "Bearer ", "", 1)
 		verifiedToken, err := utils.VerifyToken(token)
 		if err == nil {
 			err = services.CheckBlackToken(*verifiedToken)
 		}
 		if err != nil {
+			log.Println("WithAuth ", err)
 			responses.JSON403(c)
 			c.Abort()
 			return
