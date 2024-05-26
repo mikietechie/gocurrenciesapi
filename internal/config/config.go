@@ -9,18 +9,16 @@ import (
 )
 
 var _ = godotenv.Overload()
-
 var CTX = context.Background()
 
+/* System */
 var SYS_NAME = GetEnvOrDef("SYS_NAME", "Go Currencies API")
 var SECRET_KEY = GetEnvOrDef("SECRET_KEY", "$UPER_$EXRE8!")
-
 var ENV = GetEnvOrDef("ENV", "PROD")
 var DEV = ENV == "DEV"
-
 var SERVER_ADDRESS = GetEnvOrDef("SERVER_ADDRESS", "0.0.0.0:8000")
 
-// postgres://pg:pass@localhost:5432/crud
+/* POSTGRES SQLite */
 var dns = fmt.Sprintf(
 	"postgres://%s:%s@%s:%s/%s",
 	GetEnvOrDef("POSTGRES_USER", "postgres"),
@@ -33,8 +31,18 @@ var DATABASE_CONNECTION = GetEnvOrDef(
 	"DATABASE_CONNECTION",
 	dns,
 )
+
+/* Mongo DB */
+var MONGO_CONNECTION = GetEnvOrDef(
+	"MONGO_CONNECTION",
+	"",
+)
+var MONGO_DBNAME = GetEnvOrDef("MONGO_DBNAME", "gocurrenciesapi")
+
+/* REDIS*/
 var REDIS_CONNECTION = GetEnvOrDef("REDIS_CONNECTION", "localhost:6379")
 
+/*BEACON DATA SOURCE*/
 var BEACON_KEY = GetEnvOrDef("BEACON_KEY", "")
 var BEACON_URL = GetEnvOrDef("BEACON_URL", "https://api.currencybeacon.com/v1")
 var BEACON_BASE_CURRENCY = GetEnvOrDef("BEACON_BASE_CURRENCY", "USD")

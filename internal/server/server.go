@@ -7,8 +7,8 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/mikietechie/gocurrenciesapi/docs"
-	"github.com/mikietechie/gocurrenciesapi/internal/api"
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
+	"github.com/mikietechie/gocurrenciesapi/internal/controllers"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -28,11 +28,11 @@ func RunServer() {
 
 	// Routing
 	api_router := server.Group("/api/v1")
-	api.AuthRouter(*api_router.Group("/auth"))
-	api.CurrenciesRouter(*api_router.Group("/currencies"))
-	api.UsersRouter(*api_router.Group("/users"))
-	api.ClientsRouter(*api_router.Group("/clients"))
-	api.IndexRouter(*api_router.Group("/"))
+	controllers.AuthRouter(*api_router.Group("/auth"))
+	controllers.CurrenciesRouter(*api_router.Group("/currencies"))
+	controllers.UsersRouter(*api_router.Group("/users"))
+	controllers.ClientsRouter(*api_router.Group("/clients"))
+	controllers.IndexRouter(*api_router.Group("/"))
 	if config.DEV {
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}

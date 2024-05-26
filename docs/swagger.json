@@ -72,7 +72,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.UserToken"
+                            "$ref": "#/definitions/controllers.UserToken"
                         }
                     }
                 }
@@ -195,7 +195,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.UserToken"
+                            "$ref": "#/definitions/controllers.UserToken"
                         }
                     }
                 }
@@ -702,7 +702,7 @@
         }
     },
     "definitions": {
-        "api.UserToken": {
+        "controllers.UserToken": {
             "type": "object",
             "properties": {
                 "token": {

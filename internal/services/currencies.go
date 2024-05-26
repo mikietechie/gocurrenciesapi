@@ -11,6 +11,8 @@ import (
 
 	"github.com/mikietechie/gocurrenciesapi/internal/cache"
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
+	"github.com/mikietechie/gocurrenciesapi/internal/drivers"
+	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 )
 
@@ -45,18 +47,26 @@ func FetchExchangeRates() (structs.BeaconResponse, error) {
 	if err != nil {
 		log.Println("failed store in cache\n", err)
 	}
+	go StoreRates(GetRates(obj))
 	log.Println("Fetched Exchange Rates")
 	return obj, nil
 }
 
-func GetExchangeRates() (structs.BeaconResponse, error) {
+func GetCachedExchangeRates() (structs.BeaconResponse, error) {
 	var obj structs.BeaconResponse
 	data, err := cache.RDB.Get(config.CTX, RATES_KEY).Result()
 	if data != "" && err == nil {
 		log.Println("Fetched Exchange Rates from cache")
 		json.Unmarshal([]byte(data), &obj)
 		// log.Println("data\n", data)
-		return obj, nil
+	}
+	return obj, err
+}
+
+func GetExchangeRates() (structs.BeaconResponse, error) {
+	obj, err := GetCachedExchangeRates()
+	if err == nil {
+		return obj, err
 	}
 	obj, err = FetchExchangeRates()
 	if err != nil {
@@ -96,4 +106,28 @@ func GetConversion(toCurrency, fromCurrency string, amount float64) (float64, er
 		}
 	}
 	return amount * toRate / fromRate, nil
+}
+
+func GetRates(obj structs.BeaconResponse) []interface{} {
+	var rates []interface{}
+	for currency, value := range obj.Data.Rates {
+		rates = append(rates, models.Rate{
+			Currency:  currency,
+			Value:     value,
+			Timestamp: obj.Data.Date,
+		})
+	}
+	return rates
+}
+
+func StoreRates(rates []interface{}) error {
+	_, err := drivers.Mongod.Collection("rates").InsertMany(
+		config.CTX,
+		rates,
+	)
+	if err != nil {
+		log.Println("Error Store Rates\n", err)
+		return err
+	}
+	return nil
 }

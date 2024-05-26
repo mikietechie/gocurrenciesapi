@@ -1,5 +1,5 @@
 definitions:
-  api.UserToken:
+  controllers.UserToken:
     properties:
       token:
         type: string
@@ -159,7 +159,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.UserToken'
+            $ref: '#/definitions/controllers.UserToken'
       summary: Login
       tags:
       - Auth
@@ -235,7 +235,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.UserToken'
+            $ref: '#/definitions/controllers.UserToken'
       summary: Register
       tags:
       - Auth

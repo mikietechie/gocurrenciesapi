@@ -83,7 +83,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.UserToken"
+                            "$ref": "#/definitions/controllers.UserToken"
                         }
                     }
                 }
@@ -206,7 +206,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.UserToken"
+                            "$ref": "#/definitions/controllers.UserToken"
                         }
                     }
                 }
@@ -713,7 +713,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api.UserToken": {
+        "controllers.UserToken": {
             "type": "object",
             "properties": {
                 "token": {
