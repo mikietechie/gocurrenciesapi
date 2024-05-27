@@ -131,3 +131,23 @@ func StoreRates(rates []interface{}) error {
 	}
 	return nil
 }
+
+func GetRateAt(params structs.RateAtDateBody) (models.Rate, error) {
+	var rate models.Rate
+	result := drivers.Mongod.Collection("rates").FindOne(config.CTX, "")
+	if result.Err() != nil {
+		return rate, result.Err()
+	}
+	err := result.Decode(&rate)
+	return rate, err
+}
+
+func GetRatesBetween(params structs.RatesInPeriodBody) ([]models.Rate, error) {
+	var rates []models.Rate
+	cursor, err := drivers.Mongod.Collection("rates").Find(config.CTX, "")
+	if err != nil {
+		return rates, err
+	}
+	err = cursor.All(config.CTX, &rates)
+	return rates, err
+}
