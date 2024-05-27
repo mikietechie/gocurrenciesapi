@@ -14,6 +14,7 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/drivers"
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const RATES_KEY = "ExchangeRates"
@@ -134,7 +135,7 @@ func StoreRates(rates []interface{}) error {
 
 func GetRateAt(params structs.RateAtDateBody) (models.Rate, error) {
 	var rate models.Rate
-	result := drivers.Mongod.Collection("rates").FindOne(config.CTX, "")
+	result := drivers.Mongod.Collection("rates").FindOne(config.CTX, bson.D{})
 	if result.Err() != nil {
 		return rate, result.Err()
 	}
@@ -144,7 +145,7 @@ func GetRateAt(params structs.RateAtDateBody) (models.Rate, error) {
 
 func GetRatesBetween(params structs.RatesInPeriodBody) ([]models.Rate, error) {
 	var rates []models.Rate
-	cursor, err := drivers.Mongod.Collection("rates").Find(config.CTX, "")
+	cursor, err := drivers.Mongod.Collection("rates").Find(config.CTX, bson.D{})
 	if err != nil {
 		return rates, err
 	}

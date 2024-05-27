@@ -6,6 +6,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+/*
+A MongoDB Data Model for storing fetched Rates at a given timestamp.
+*/
 type Rate struct {
 	ID        primitive.ObjectID `json:"_id" bson:"_id"`
 	Currency  string             `json:"currency" Usage:"required"`
