@@ -9,11 +9,18 @@ services:
     image: postgres
     volumes:
       # - ./data/db:/var/lib/postgresql/data
-      - postgres_volume:/var/lib/postgresql/data/
+      - ./dockervolume/postgres:/var/lib/postgresql/data/
     env_file:
       - .env
     ports:
       - "5432:5432"
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    env_file:
+      - .env
 
   mongodb:
     image: mongo:7.0
@@ -23,7 +30,7 @@ services:
     ports:
       - 27017:27017 
     volumes:
-      - mongodata_volume:/data/db
+      - ./dockervolume/mongo:/data/db
     container_name: mongodb
 
   app:
@@ -44,6 +51,7 @@ services:
       - SERVER_ADDRESS=0.0.0.0:8000
       - REDIS_CONNECTION=cache:6379
       - DB_HOST=db
+      - MONGO_CONNECTION=mongodb://localhost:27017/?authSource=admin
 
   cron:
     build:
@@ -71,12 +79,18 @@ volumes:
   mongodata_volume:
 
 ###Example .env
-## BEACON_KEY=D6CUNjH3r66zmLZa99DYI2GrlQPg6kZd
-## BEACON_BASE_CURRENCY=USD
+# BEACON_KEY=You can't see me, my name is Mike Z
+# BEACON_BASE_CURRENCY=USD
 
-## SYS_NAME=Go Currencies API
-## SECRET_KEY=$UPER_$EXRE8!
+# SYS_NAME=Go Currencies API
+# SECRET_KEY=SUPER_EXRE8!
+# ENV=DEV
 
-## POSTGRES_PASSWORD=$UPER_$EXRE8!DBP@$$W0RD
-## POSTGRES_DB=gocurrenciesapidb
-## POSTGRES_USER=gocurrencies
+# POSTGRES_USER=pg
+# POSTGRES_PASSWORD=pass
+# POSTGRES_DB=crud
+# DB_HOST=localhost
+
+# # PG ADMIN Db
+# PGADMIN_DEFAULT_EMAIL=mzinyoni7@outlook.com
+# PGADMIN_DEFAULT_PASSWORD=password

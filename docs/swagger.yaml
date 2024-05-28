@@ -39,6 +39,21 @@ definitions:
       user_id:
         type: integer
     type: object
+  models.Rate:
+    properties:
+      created_at:
+        type: string
+      currency:
+        type: string
+      id:
+        type: string
+      timestamp:
+        type: string
+      updated_at:
+        type: string
+      value:
+        type: number
+    type: object
   models.User:
     properties:
       active:
@@ -62,6 +77,10 @@ definitions:
     properties:
       error: {}
     type: object
+  structs.BeaconRates:
+    additionalProperties:
+      type: number
+    type: object
   structs.BeaconResponse:
     properties:
       meta:
@@ -78,9 +97,7 @@ definitions:
           date:
             type: string
           rates:
-            additionalProperties:
-              type: number
-            type: object
+            $ref: '#/definitions/structs.BeaconRates'
         type: object
     type: object
   structs.LoginPayload:
@@ -425,6 +442,68 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Currencies List
+      tags:
+      - Auth
+  /api/v1/currencies/rates-at:
+    get:
+      description: Gets Rate at Datetime Endpoint
+      parameters:
+      - description: Currency Code
+        in: query
+        name: currency
+        required: true
+        type: string
+      - description: Time Stamp
+        in: query
+        name: timestamp
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rate'
+      security:
+      - ApiKeyAuth: []
+      summary: Rate at Datetime Endpoint
+      tags:
+      - Auth
+  /api/v1/currencies/rates-in:
+    get:
+      description: Gets Rate in Period Endpoint
+      parameters:
+      - collectionFormat: csv
+        description: Currency Code
+        in: query
+        items:
+          type: string
+        name: currencies
+        required: true
+        type: array
+      - description: Start
+        in: query
+        name: start
+        required: true
+        type: string
+      - description: Start
+        in: query
+        name: end
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Rate'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: Rate in Period Endpoint
       tags:
       - Auth
   /api/v1/users:

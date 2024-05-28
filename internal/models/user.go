@@ -28,7 +28,14 @@ func (user *User) SetPassword() {
 	}
 }
 
+func (user *User) SetRole() {
+	if user.Role != "admin" {
+		user.Role = "client"
+	}
+}
+
 func (user *User) BeforeSave(tx *gorm.DB) (err error) {
+	user.SetRole()
 	user.SetPassword()
 	return
 }

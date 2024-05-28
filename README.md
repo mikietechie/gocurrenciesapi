@@ -1,5 +1,12 @@
 # SAPP Rates for Gophers
 
+## About Me
+
+Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
+Going straight to the point, shouting at the top of my voice, furiously punching my keyboard: *I AM LOOKING FOR A DECENT JOB AS A JUNIOR OR MID LEVEL SOFTWARE ENGINEER <malito:mzinyoni7@outlook.com>*.
+Back to calm, I am a self taught developer but I did go to Software Engineering University as well. I have 7+ years of computer programming experience and four of them being proffessional work experience. I have written software that processed millions of dollars *i.e I am not a millionnaire, I was paid slightly less than 10k*
+I am fluent in English and decent in Russian.
+
 ## Introduction
 
 A Fintech API. This is a backend server for fetching, storing, and serving currency and rates data. Examples of companies that provide this service are Microsoft, Google, Polygon and Beacon. My motivation for making this API is to prove how well I understand backend development, how much I know about APIs, Security, Caching, Optimazation and Documentation. I also wish to present it as a portfolio project since I am trying to move from being a fullstack Python JavaScript developer to a "Real" backend developer who is worth paying thousands of dollars.
@@ -49,7 +56,7 @@ The client can:
 2. Fetch a list of all currency names
 3. Convert from one currency to another a given amount.
 4. Query the rate at a given point in time.
-5. Query the time series data for selected currencies in a given tim period
+5. Query the time series data for selected currencies in a given time period
 
 From an Admin Dashboard Users with the admin role can add more manage users, clients and client top ups.
 

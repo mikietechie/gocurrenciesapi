@@ -512,6 +512,102 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/currencies/rates-at": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Rate at Datetime Endpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Rate at Datetime Endpoint",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Currency Code",
+                        "name": "currency",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Time Stamp",
+                        "name": "timestamp",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Rate"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/currencies/rates-in": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Rate in Period Endpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Rate in Period Endpoint",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Currency Code",
+                        "name": "currencies",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start",
+                        "name": "start",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start",
+                        "name": "end",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Rate"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/users": {
             "get": {
                 "security": [
@@ -774,6 +870,29 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Rate": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "number"
+                }
+            }
+        },
         "models.User": {
             "type": "object",
             "properties": {
@@ -809,6 +928,12 @@ const docTemplate = `{
                 "error": {}
             }
         },
+        "structs.BeaconRates": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "number"
+            }
+        },
         "structs.BeaconResponse": {
             "type": "object",
             "properties": {
@@ -833,10 +958,7 @@ const docTemplate = `{
                             "type": "string"
                         },
                         "rates": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "number"
-                            }
+                            "$ref": "#/definitions/structs.BeaconRates"
                         }
                     }
                 }

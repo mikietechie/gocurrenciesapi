@@ -16,7 +16,7 @@ import (
 // @Tags         	Auth
 // @Produce      	json
 // @Success      	200   {object}  structs.BeaconResponse
-// @Router       	/api/v1/currencies/exchange-rates [get]
+// @Router       	/api/v1/currencies/live [get]
 // @Security 		ApiKeyAuth
 func GetExchangeRates(c *gin.Context) {
 	data, err := services.GetExchangeRates()
@@ -33,7 +33,7 @@ func GetExchangeRates(c *gin.Context) {
 // @Tags         Auth
 // @Produce      json
 // @Success      200   {object}  []string
-// @Router       /api/v1/currencies/list [get]
+// @Router       /api/v1/currencies/currencies [get]
 // @Security 	ApiKeyAuth
 func GetCurrencies(c *gin.Context) {
 	data, err := services.GetCurrencies()
@@ -53,7 +53,7 @@ func GetCurrencies(c *gin.Context) {
 // @Param        fromCurrency path string true "From Currency"
 // @Param        amount path float64 true "Amount"
 // @Success      200   {object}  float64
-// @Router       /api/v1/currencies/conversion/{toCurrency}/{fromCurrency}/{amount} [get]
+// @Router       /api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount} [get]
 // @Security 	ApiKeyAuth
 func GetConversion(c *gin.Context) {
 	toCurrency, _ := c.Params.Get("toCurrency")
@@ -81,10 +81,10 @@ func GetConversion(c *gin.Context) {
 // @Description  Gets Rate at Datetime Endpoint
 // @Tags         Auth
 // @Produce      json
-// @Query        currency path string true "Currency"
-// @Query        timestamp path time.Time true "Date time"
+// @Param        currency    query    string  true  "Currency Code"
+// @Param        timestamp   query    string  true  "Time Stamp"
 // @Success      200   {object}  models.Rate
-// @Router       /api/v1/currencies/rates-at [get]
+// @Router       /api/v1/currencies/prevailing [get]
 // @Security 	ApiKeyAuth
 func GetRateAt(c *gin.Context) {
 	var body structs.RateAtDateBody
@@ -102,15 +102,19 @@ func GetRateAt(c *gin.Context) {
 // @Description  Gets Rate in Period Endpoint
 // @Tags         Auth
 // @Produce      json
-// @Query        currencies path []string true "Currencies"
-// @Query        start path time.Time true "Date time"
-// @Query        end path time.Time true "Date time"
+// @Param        currencies  query    []string  true  "Currency Code"
+// @Param        start       query    string    true  "Start"
+// @Param        end         query    string    true  "Start"
 // @Success      200   {object}  []models.Rate
-// @Router       /api/v1/currencies/rates-in [get]
+// @Router       /api/v1/currencies/historical [get]
 // @Security 	ApiKeyAuth
 func GetRatesInPeriod(c *gin.Context) {
 	var body structs.RatesInPeriodBody
-	c.BindQuery(&body)
+	err := c.BindQuery(&body)
+	if err != nil {
+		responses.JSON400(c, err.Error())
+		return
+	}
 	data, err := services.GetRatesBetween(body)
 	if err != nil {
 		responses.JSON400(c, err.Error())
@@ -121,9 +125,9 @@ func GetRatesInPeriod(c *gin.Context) {
 
 func CurrenciesRouter(r gin.RouterGroup) {
 	r.Use(middleware.WithClient())
-	r.GET("/exchange-rates", GetExchangeRates)
-	r.GET("/list", GetCurrencies)
-	r.GET("/conversion/:toCurrency/:fromCurrency/:amount", GetConversion)
-	r.GET("/rates-at", GetRateAt)
-	r.GET("/rates-in", GetRatesInPeriod)
+	r.GET("/live", GetExchangeRates)
+	r.GET("/currencies", GetCurrencies)
+	r.GET("/convert/:toCurrency/:fromCurrency/:amount", GetConversion)
+	r.GET("/prevailing", GetRateAt)
+	r.GET("/historical", GetRatesInPeriod)
 }

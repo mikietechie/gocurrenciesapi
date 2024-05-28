@@ -59,7 +59,7 @@ func WithUser() gin.HandlerFunc {
 }
 
 func AssertIsAdmin(c *gin.Context) error {
-	if GetUserFromC(c).Role != "Admin" {
+	if GetUserFromC(c).Role != "admin" {
 		return errors.New("only admins can access this section")
 	}
 	return nil

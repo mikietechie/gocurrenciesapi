@@ -11,6 +11,7 @@ import (
 var Mongod *mongo.Database
 
 func ConnectMongo() {
+	log.Println("Process: Connecting to MongoDb")
 	client, err := mongo.Connect(config.CTX, options.Client().ApplyURI(config.MONGO_CONNECTION))
 	if err != nil {
 		log.Panicln(err)
@@ -21,6 +22,7 @@ func ConnectMongo() {
 		log.Panicln(err)
 	}
 	Mongod = client.Database(config.MONGO_DBNAME)
+	log.Println("Success: Connected to MongoDb")
 }
 
 func DisonnectMongo() {
