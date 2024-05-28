@@ -71,10 +71,12 @@ services:
     depends_on:
       - cache
       - db
+      - mongodb
     environment:
       - SERVER_ADDRESS=0.0.0.0:8000
       - REDIS_CONNECTION=cache:6379
       - DB_HOST=db
+      - MONGO_CONNECTION=mongodb://localhost:27017/?authSource=admin
 
   cache:
     restart: unless-stopped

@@ -24,16 +24,22 @@ import (
 func main() {
 	initialize.Init()
 	defer initialize.Tear()
-	log.Println("Cron jobs being Created")
+	log.Println("Status: Cron jobs being Created")
 	c := cron.New()
+
+	/*
+		After every time period we want to fetch fresh data from our
+		Data Source cache it locally and store it in the Database
+	*/
 	c.AddFunc(fmt.Sprintf("@every %dm", config.RATES_LIFETIME), func() {
 		log.Println("Cron: FetchExchangeRates")
 		go services.FetchExchangeRates()
 	})
 	c.Start()
+
 	time.Sleep(time.Minute)
-	log.Println("Cron jobs Created")
-	defer log.Println("Exited Cron")
+	log.Println("Success: Cron jobs Created")
+	defer log.Println("Status: Exited Cron")
 	defer c.Stop()
 	select {}
 }
