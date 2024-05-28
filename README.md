@@ -1,5 +1,11 @@
 # SAPP Rates for Gophers
 
+```bash
+// Checkout whats needed in the .env file from the file docker-compose.yml
+touch .env
+docker compose -f "docker-compose.yml" up -d --build
+```
+
 ## About Me
 
 Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
@@ -88,6 +94,22 @@ For more technical details please go through the swagger API.
 6. We could have used a faster programming language called Rust or Zig, or even C. Honestly I think languages like Rust, C, C++ and Erlang are too complex for a guy like me. Go is the lowest I will Go. (Before I dropped out of college when I was forced to learn PHP after learning C).
 7. Clients and Users pagination.
 8. We need more security like rate limiting for DDOS protection.
+9. Most importantly we need to add tests, tests are very important, unfortunately I forgot to stick to test driven development. Shame on me, and all the developers who do not do TDD.
+10. Add Socket IO and Websockets support.
+11. Add Payments and A Web client.
+12. Inculcate scalability.
+
+## Scalability Plan
+
+Ok here is the point, I do know how to use AWS, unfortunately I do not have certificates to prove my claim. A few years ago I devoted three months of my teenage life to learning Docker, Git and AWS. I wished to get an AWS certificate but I did not have the money, maybe I could have passed even upto cloud architect. On another note I am glad I didn't because the certificate would have expired by now.
+
+Instead of runnig all my services from one `docker-compose.yml` file, I will have to use an infinitely scalable MongoDB, Redis and Postgres service provided by a good cloud service provider. (Yandex Cloud, VK Cloud, AWS, Google Cloud, Alibaba, Microsoft Azure e.t.c). Truth be told we all hate these giant tech companies but we can't do without them. (Thanks to Microsoft Github, Vs Code, Google Go, Yandex, Sberbank and Ubuntu) I was able to create this project.
+
+To make the system more efficient we might try to implement what is called database sharding.
+To add more spice we can deploy our service at different Geo Locations and use a giant reverse proxy.
+We can also use something called Kubernites to launch multiple instances of our server according to usage demand.
+
+Once I do this I will lose a lot of money to these big tech companies, and I will introduce a lot of complexity to my innocent app, I might even have to end up hiring a Devops Engineer, and an Accountant to handle my Cloud Service Provide invoices and taxes. I will go broke, then they will look for me, find me and ask to sell my properties, unfortunately I do not own any properties except for my precious laptop Lenovo 7th Gen, 16Gb Ram, 1Tb SSD (It's a beast. I got it as a gift from my former boss), then they will find my dad who still has custody over me and sell his mansion located in a porche surbub in Southern Africa where I come from.
 
 ## Challenges faced
 
@@ -96,3 +118,8 @@ For more technical details please go through the swagger API.
 3. Structuring the code. Unlike Django, Angular and Nest JS. Golang Gin does not give you a predifined way to structure the project. In my journey to learn Go I met way to many structures and I ended up confused. I tried to take the best from all of them.
 4. Lack of time, I did not have enough time per day to dedicate to this project. I work 8 hours a day as a Python Backend Developer. (I work on peripheral services only, because I cannot understand properly the language used in my city of residance)
 5. *I had no one to give me feedback as I was developing this system. I have 4 years of experience in developing production grade Python JavaScript software, but I have always worked under the watch of an alpha male, a senior software engineer, a 10x developer, a seasoned developer. Truth be told the people who hold these titles have invaluable experience, they know everything, they have seen everything.*
+6. It looks like I do not clearly understand how Go Contexts work.
+
+## Conclusion
+
+The name is Mike, Mike Z.
