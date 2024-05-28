@@ -381,7 +381,7 @@ paths:
       summary: Update Client
       tags:
       - Client
-  /api/v1/currencies/conversion/{toCurrency}/{fromCurrency}/{amount}:
+  /api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount}:
     get:
       description: Gets Conversion Endpoint
       parameters:
@@ -412,22 +412,7 @@ paths:
       summary: Conversion Endpoint
       tags:
       - Auth
-  /api/v1/currencies/exchange-rates:
-    get:
-      description: Gets Currencies State
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/structs.BeaconResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Currencies State
-      tags:
-      - Auth
-  /api/v1/currencies/list:
+  /api/v1/currencies/currencies:
     get:
       description: Gets Currencies List
       produces:
@@ -444,33 +429,7 @@ paths:
       summary: Currencies List
       tags:
       - Auth
-  /api/v1/currencies/rates-at:
-    get:
-      description: Gets Rate at Datetime Endpoint
-      parameters:
-      - description: Currency Code
-        in: query
-        name: currency
-        required: true
-        type: string
-      - description: Time Stamp
-        in: query
-        name: timestamp
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Rate'
-      security:
-      - ApiKeyAuth: []
-      summary: Rate at Datetime Endpoint
-      tags:
-      - Auth
-  /api/v1/currencies/rates-in:
+  /api/v1/currencies/historical:
     get:
       description: Gets Rate in Period Endpoint
       parameters:
@@ -504,6 +463,47 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Rate in Period Endpoint
+      tags:
+      - Auth
+  /api/v1/currencies/live:
+    get:
+      description: Gets Currencies State
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.BeaconResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Currencies State
+      tags:
+      - Auth
+  /api/v1/currencies/prevailing:
+    get:
+      description: Gets Rate at Datetime Endpoint
+      parameters:
+      - description: Currency Code
+        in: query
+        name: currency
+        required: true
+        type: string
+      - description: Time Stamp
+        in: query
+        name: timestamp
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Rate'
+      security:
+      - ApiKeyAuth: []
+      summary: Rate at Datetime Endpoint
       tags:
       - Auth
   /api/v1/users:

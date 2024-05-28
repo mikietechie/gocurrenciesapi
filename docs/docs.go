@@ -411,7 +411,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/conversion/{toCurrency}/{fromCurrency}/{amount}": {
+        "/api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount}": {
             "get": {
                 "security": [
                     {
@@ -459,32 +459,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/exchange-rates": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Gets Currencies State",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Currencies State",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/structs.BeaconResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/currencies/list": {
+        "/api/v1/currencies/currencies": {
             "get": {
                 "security": [
                     {
@@ -512,48 +487,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/rates-at": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Gets Rate at Datetime Endpoint",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Rate at Datetime Endpoint",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Currency Code",
-                        "name": "currency",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Time Stamp",
-                        "name": "timestamp",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Rate"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/currencies/rates-in": {
+        "/api/v1/currencies/historical": {
             "get": {
                 "security": [
                     {
@@ -603,6 +537,72 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/models.Rate"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/currencies/live": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Currencies State",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Currencies State",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BeaconResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/currencies/prevailing": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Rate at Datetime Endpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Rate at Datetime Endpoint",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Currency Code",
+                        "name": "currency",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Time Stamp",
+                        "name": "timestamp",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Rate"
                         }
                     }
                 }
