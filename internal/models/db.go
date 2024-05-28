@@ -15,7 +15,6 @@ import (
 
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
 	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -24,10 +23,6 @@ var Db *gorm.DB
 func ConnectDb() {
 	var err error
 	Db, err = gorm.Open(postgres.Open(config.DATABASE_CONNECTION), &gorm.Config{})
-	if err != nil && config.DEV {
-		log.Println("Postgres Connection failed, trying SQLite")
-		Db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-	}
 	if err != nil {
 		log.Fatalln("Failed to connect to database\n", err)
 	}

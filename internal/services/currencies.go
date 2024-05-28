@@ -21,7 +21,6 @@ import (
 
 	"github.com/mikietechie/gocurrenciesapi/internal/cache"
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
-	"github.com/mikietechie/gocurrenciesapi/internal/drivers"
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 	"go.mongodb.org/mongo-driver/bson"
@@ -132,7 +131,7 @@ func GetRatesFromBeacon(beacon structs.BeaconResponse) []interface{} {
 }
 
 func StoreRatesToDB(rates []interface{}) error {
-	_, err := drivers.Mongod.Collection("rates").InsertMany(
+	_, err := models.Mongod.Collection("rates").InsertMany(
 		config.CTX,
 		rates,
 	)
@@ -154,7 +153,7 @@ func GetRateAt(params structs.RateAtDateBody) (models.Rate, error) {
 		"currency": params.Currency,
 	}
 	log.Println(filter)
-	result := drivers.Mongod.Collection("rates").FindOne(config.CTX, filter)
+	result := models.Mongod.Collection("rates").FindOne(config.CTX, filter)
 	if result.Err() != nil {
 		return rate, result.Err()
 	}
@@ -171,7 +170,7 @@ func GetRatesBetween(params structs.RatesInPeriodBody) ([]models.Rate, error) {
 		},
 		"currency": bson.M{"$in": params.Currencies},
 	}
-	cursor, err := drivers.Mongod.Collection("rates").Find(config.CTX, filter)
+	cursor, err := models.Mongod.Collection("rates").Find(config.CTX, filter)
 	if err != nil {
 		return rates, err
 	}

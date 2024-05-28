@@ -8,7 +8,7 @@ Description			A Fintech Data Service
 Inspired by			https://freecurrencyapi.com
 */
 
-package drivers
+package models
 
 import (
 	"log"
