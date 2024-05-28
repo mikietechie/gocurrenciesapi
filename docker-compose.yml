@@ -1,7 +1,16 @@
+# Date Created		1 May 2024
+# Author				Mike Z
+# Email				mzinyoni7@outlook.com
+# Website				https://mikeio.web.app
+# Status				Looking for a job!
+# Description			A Fintech Data Service
+# Inspired by			https://freecurrencyapi.com
+
 # docker compose -f "docker-compose.yml" up -d --build
 # docker compose -f "docker-compose.yml" down
 # docker exec -it containerid /bin/bash
 # docker exec -it postgres /bin/bash
+
 
 services:
   # .env must have POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_USER
