@@ -143,7 +143,7 @@ func UpdateClient(c *gin.Context) {
 // @Produce      json
 // @Param        payload  body      structs.UpdateClientReadsBody  true  "structs.UpdateClientReadsBody JSON"
 // @Success      200   {object}  models.Client
-// @Router       /api/v1/auth/password [patch]
+// @Router       /api/v1/clients [patch]
 // @Security     Bearer
 func AddClientReadsAvailable(c *gin.Context) {
 	var body structs.UpdateClientReadsBody

@@ -26,12 +26,14 @@ type User struct {
 	Active      bool   `gorm:"default:true" json:"active"`
 }
 
-func (u User) CheckPassword(password string) bool {
-	return u.Password == utils.Hash256(password)
+func (user User) CheckPassword(password string) bool {
+	log.Println("UPssword\t:", user.Password)
+	log.Println("Password\t:", utils.Hash256(password))
+	return user.Password == utils.Hash256(password)
 }
 
 func (user *User) SetPassword() {
-	log.Println("Setting Password")
+	log.Println("Step: Setting Password")
 	if user.NewPassword != "" && user.NewPassword != user.Password {
 		user.Password = utils.Hash256(user.NewPassword)
 		user.NewPassword = ""

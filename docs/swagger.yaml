@@ -133,7 +133,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/v1/:
+  /api/v1:
     get:
       description: Gets Index
       produces:
@@ -197,27 +197,6 @@ paths:
     patch:
       description: Gets Credentials and Returns Auth Token
       parameters:
-      - description: structs.UpdateClientReadsBody JSON
-        in: body
-        name: payload
-        required: true
-        schema:
-          $ref: '#/definitions/structs.UpdateClientReadsBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Client'
-      security:
-      - Bearer: []
-      summary: Client
-      tags:
-      - Auth
-    put:
-      description: Gets Credentials and Returns Auth Token
-      parameters:
       - description: structs.UpdateUserPasswordPayload JSON
         in: body
         name: payload
@@ -277,6 +256,27 @@ paths:
       summary: List Client
       tags:
       - Client
+    patch:
+      description: Gets Credentials and Returns Auth Token
+      parameters:
+      - description: structs.UpdateClientReadsBody JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.UpdateClientReadsBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+      security:
+      - Bearer: []
+      summary: Client
+      tags:
+      - Auth
     post:
       description: Create New Client
       parameters:

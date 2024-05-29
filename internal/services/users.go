@@ -16,10 +16,13 @@ import (
 
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
-	"github.com/mikietechie/gocurrenciesapi/internal/utils"
 )
 
 func UpdateUserPassword(user *models.User, body structs.UpdateUserPasswordPayload) error {
+	fmt.Println("body.CurrentPassword\t:", body.CurrentPassword)
+	fmt.Println("body.NewPassword\t:", body.NewPassword)
+	fmt.Println("body.NewPasswordConfirmation\t:", body.NewPasswordConfirmation)
+	fmt.Println("body.CheckPassword\t:", user.CheckPassword(body.CurrentPassword))
 	if !user.CheckPassword(body.CurrentPassword) {
 		return errors.New("passwords don't match")
 	}
@@ -27,7 +30,7 @@ func UpdateUserPassword(user *models.User, body structs.UpdateUserPasswordPayloa
 	if body.NewPassword != body.NewPasswordConfirmation {
 		return errors.New("passwords confirmation failed")
 	}
-	user.NewPassword = utils.Hash256(body.NewPassword)
+	user.NewPassword = body.NewPassword
 	err := models.Db.Save(&user).Error
 	if err != nil {
 		return errors.New("failed to save to database")
@@ -49,8 +52,8 @@ func DeactivateUser(user *models.User) error {
 	return models.Db.Save(&user).Error
 }
 
-func CreateUser(body *models.User) (models.User, error) {
-	fmt.Println("Password is here \t:\t", body.NewPassword)
+func RegisterUser(body *models.User) (models.User, error) {
+	body.Role = "client"
 	err := models.Db.Create(&body).Error
 	return *body, err
 }

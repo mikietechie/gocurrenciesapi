@@ -83,7 +83,7 @@ func Register(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	user, err = services.CreateUser(body)
+	user, err = services.RegisterUser(body)
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -121,7 +121,7 @@ func Login(c *gin.Context) {
 // @Produce      json
 // @Param        payload  body      structs.UpdateUserPasswordPayload  true  "structs.UpdateUserPasswordPayload JSON"
 // @Success      200   {object}  bool
-// @Router       /api/v1/auth/password [put]
+// @Router       /api/v1/auth/password [patch]
 // @Security     Bearer
 func UpdateUserPassword(c *gin.Context) {
 	var body structs.UpdateUserPasswordPayload
@@ -141,8 +141,6 @@ func UpdateUserPassword(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	var readItem *models.User
-	models.Db.Model(&user).Scan(&readItem)
 	responses.JSON200(c, true)
 }
 

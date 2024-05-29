@@ -13,6 +13,8 @@ package config
 import (
 	"context"
 	"fmt"
+	"log"
+	"strconv"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -56,5 +58,23 @@ var REDIS_CONNECTION = GetEnvOrDef("REDIS_CONNECTION", "localhost:6379")
 var BEACON_KEY = GetEnvOrDef("BEACON_KEY", "")
 var BEACON_URL = GetEnvOrDef("BEACON_URL", "https://api.currencybeacon.com/v1")
 var BEACON_BASE_CURRENCY = GetEnvOrDef("BEACON_BASE_CURRENCY", "USD")
-var RATES_LIFETIME = 1 // Int: Rates cache lifetime
-var JWT_TOKEN_LIFETIME = time.Hour * 24
+var RATES_LIFETIME, _ = strconv.ParseInt(
+	GetEnvOrDef("RATES_LIFETIME", "60"),
+	10,
+	64,
+) // Int: Rates cache lifetime
+var envJWTTokenLifetime, _ = strconv.ParseInt(
+	GetEnvOrDef("JWT_TOKEN_LIFETIME", "3600"),
+	10,
+	64,
+)
+var JWT_TOKEN_LIFETIME = time.Minute * time.Duration(envJWTTokenLifetime)
+
+func init() {
+	if RATES_LIFETIME <= 0 {
+		log.Fatalln("Environment 'RATES_LIFETIME' should be a positive integer")
+	}
+	if JWT_TOKEN_LIFETIME <= 0 {
+		log.Fatalln("Environment 'JWT_TOKEN_LIFETIME' should be a positive integer")
+	}
+}

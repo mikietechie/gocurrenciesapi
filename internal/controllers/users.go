@@ -16,7 +16,6 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/responses"
 	"github.com/mikietechie/gocurrenciesapi/internal/services"
-	"github.com/mikietechie/gocurrenciesapi/internal/utils"
 )
 
 // List User     godoc
@@ -96,7 +95,6 @@ func CreateUser(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	item.Password = utils.Hash256(item.Password)
 	err = models.Db.Create(&item).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())

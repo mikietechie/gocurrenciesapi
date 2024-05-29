@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/": {
+        "/api/v1": {
             "get": {
                 "description": "Gets Index",
                 "produces": [
@@ -112,7 +112,7 @@ const docTemplate = `{
             }
         },
         "/api/v1/auth/password": {
-            "put": {
+            "patch": {
                 "security": [
                     {
                         "Bearer": []
@@ -142,40 +142,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "boolean"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ],
-                "description": "Gets Credentials and Returns Auth Token",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Client",
-                "parameters": [
-                    {
-                        "description": "structs.UpdateClientReadsBody JSON",
-                        "name": "payload",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/structs.UpdateClientReadsBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Client"
                         }
                     }
                 }
@@ -281,6 +247,40 @@ const docTemplate = `{
                         "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/responses.Error400Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Gets Credentials and Returns Auth Token",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Client",
+                "parameters": [
+                    {
+                        "description": "structs.UpdateClientReadsBody JSON",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.UpdateClientReadsBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
                         }
                     }
                 }

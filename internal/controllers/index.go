@@ -22,7 +22,7 @@ import (
 // @Tags         Auth
 // @Produce      json
 // @Success      200   {object}  map[string]any
-// @Router       /api/v1/ [get]
+// @Router       /api/v1 [get]
 func Index(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"message": "Hello",
