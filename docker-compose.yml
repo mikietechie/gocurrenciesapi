@@ -11,9 +11,8 @@
 # docker exec -it containerid /bin/bash
 # docker exec -it postgres /bin/bash
 
-
+# PLEASE SEE WHAT THE .env FILE IS SUPPOSED TO LOOK LIKE FROM .env.example
 services:
-  # .env must have POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_USER
   db:
     image: postgres
     volumes:
@@ -88,20 +87,3 @@ services:
 volumes:
   postgres_volume:
   mongodata_volume:
-
-###Example .env
-# BEACON_KEY=You can't see me, my name is Mike Z
-# BEACON_BASE_CURRENCY=USD
-
-# SYS_NAME=Go Currencies API
-# SECRET_KEY=SUPER_EXRE8!
-# ENV=DEV
-
-# POSTGRES_USER=pg
-# POSTGRES_PASSWORD=pass
-# POSTGRES_DB=crud
-# DB_HOST=localhost
-
-# # PG ADMIN Db
-# PGADMIN_DEFAULT_EMAIL=mzinyoni7@outlook.com
-# PGADMIN_DEFAULT_PASSWORD=password
