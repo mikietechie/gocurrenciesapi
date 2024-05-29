@@ -41,7 +41,7 @@ func GetClientInfo(c *gin.Context) {
 // @Success      	200   {object}  structs.BeaconResponse
 // @Router       	/api/v1/service/live [get]
 // @Security 		ApiKeyAuth
-func GetExchangeRates(c *gin.Context) {
+func GetLive(c *gin.Context) {
 	data, err := services.GetExchangeRates()
 	if err != nil {
 		responses.JSON400(c, err.Error())
@@ -109,7 +109,7 @@ func GetConversion(c *gin.Context) {
 // @Success      200   {object}  models.Rate
 // @Router       /api/v1/service/prevailing [get]
 // @Security 	ApiKeyAuth
-func GetRateAt(c *gin.Context) {
+func GetPrevailing(c *gin.Context) {
 	var body structs.RateAtDateBody
 	c.BindQuery(&body)
 	rate, err := services.GetRateAt(body)
@@ -131,7 +131,7 @@ func GetRateAt(c *gin.Context) {
 // @Success      200   {object}  []models.Rate
 // @Router       /api/v1/service/historical [get]
 // @Security 	ApiKeyAuth
-func GetRatesInPeriod(c *gin.Context) {
+func GetHistorical(c *gin.Context) {
 	var body structs.RatesInPeriodBody
 	err := c.BindQuery(&body)
 	if err != nil {
@@ -148,9 +148,9 @@ func GetRatesInPeriod(c *gin.Context) {
 
 func ServiceRouter(r gin.RouterGroup) {
 	r.Use(middleware.WithClient())
-	r.GET("/live", GetExchangeRates)
+	r.GET("/live", GetLive)
 	r.GET("/currencies", GetCurrencies)
 	r.GET("/convert/:toCurrency/:fromCurrency/:amount", GetConversion)
-	r.GET("/prevailing", GetRateAt)
-	r.GET("/historical", GetRatesInPeriod)
+	r.GET("/prevailing", GetPrevailing)
+	r.GET("/historical", GetHistorical)
 }
