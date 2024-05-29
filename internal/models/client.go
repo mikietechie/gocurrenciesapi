@@ -20,7 +20,7 @@ type Client struct {
 	Name           string `gorm:"size:255;not null" json:"name"`
 	APIKey         string `gorm:"size:255;not null;unique" json:"api_key"`
 	UserID         int    `gorm:"not null;unique" json:"user_id"`
-	User           User   `json:"user"`
+	User           User   `json:"-"`
 	ReadsUsed      int    `gorm:"default:0;not null" json:"reads_used"`
 	ReadsAvailable int    `gorm:"default:0;not null" json:"reads_available"`
 	Domains        string `gorm:"size:1024;default:'*'" json:"domains"`

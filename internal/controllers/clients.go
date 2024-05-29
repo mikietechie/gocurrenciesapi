@@ -30,7 +30,7 @@ import (
 // @Security     Bearer
 func GetClients(c *gin.Context) {
 	var items []models.Client
-	err := models.Db.Model(models.Client{}).Preload("User").Find(&items).Error
+	err := models.Db.Model(models.Client{}).Find(&items).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return

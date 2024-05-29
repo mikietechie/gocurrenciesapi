@@ -35,6 +35,14 @@ func main() {
 		log.Println("Cron: FetchExchangeRates")
 		go services.FetchExchangeRates()
 	})
+
+	/*
+		After a certain time period we give free reads to our clients
+	*/
+	c.AddFunc(fmt.Sprintf("@every %dd", config.REPLANISH_PERIOD), func() {
+		log.Println("Cron: ReplenishClientsReads")
+		go services.ReplenishClientsReads()
+	})
 	c.Start()
 
 	time.Sleep(time.Minute)

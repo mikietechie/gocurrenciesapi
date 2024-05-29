@@ -36,6 +36,98 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/account/client/using-key": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Account Using Key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Account",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/account/client/using-token": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Gets Account Using TOken",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Account",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/account/register": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Register New Client",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Register Client",
+                "parameters": [
+                    {
+                        "description": "models.Client JSON",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error400Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/auth/deactivate": {
             "put": {
                 "security": [
@@ -406,31 +498,6 @@ const docTemplate = `{
                         "description": "Bad Request",
                         "schema": {
                             "$ref": "#/definitions/responses.Error400Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/service/account": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Gets Account",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Service"
-                ],
-                "summary": "Account",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Client"
                         }
                     }
                 }
@@ -886,9 +953,6 @@ const docTemplate = `{
                 },
                 "updatedAt": {
                     "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/models.User"
                 },
                 "user_id": {
                     "type": "integer"

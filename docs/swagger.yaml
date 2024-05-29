@@ -34,8 +34,6 @@ definitions:
         type: integer
       updatedAt:
         type: string
-      user:
-        $ref: '#/definitions/models.User'
       user_id:
         type: integer
     type: object
@@ -147,6 +145,62 @@ paths:
       summary: Index
       tags:
       - Index
+  /api/v1/account/client/using-key:
+    get:
+      description: Gets Account Using Key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+      security:
+      - ApiKeyAuth: []
+      summary: Account
+      tags:
+      - Account
+  /api/v1/account/client/using-token:
+    get:
+      description: Gets Account Using TOken
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+      security:
+      - Bearer: []
+      summary: Account
+      tags:
+      - Account
+  /api/v1/account/register:
+    post:
+      description: Register New Client
+      parameters:
+      - description: models.Client JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Register Client
+      tags:
+      - Account
   /api/v1/auth/deactivate:
     put:
       description: Deactivate user
@@ -381,21 +435,6 @@ paths:
       summary: Update Client
       tags:
       - Client
-  /api/v1/service/account:
-    get:
-      description: Gets Account
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Client'
-      security:
-      - ApiKeyAuth: []
-      summary: Account
-      tags:
-      - Service
   /api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}:
     get:
       description: Gets Conversion Endpoint

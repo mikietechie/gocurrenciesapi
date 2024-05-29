@@ -30,6 +30,12 @@ func (user User) CheckPassword(password string) bool {
 	return user.Password == utils.Hash256(password)
 }
 
+func (user User) GetClient() (Client, error) {
+	var client Client
+	err := Db.First(&client, "user_id = ?", user.ID).Error
+	return client, err
+}
+
 func (user *User) SetPassword() {
 	log.Println("Step: Setting Password")
 	if user.NewPassword != "" && user.NewPassword != user.Password {

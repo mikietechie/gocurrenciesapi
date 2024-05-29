@@ -11,6 +11,7 @@ Inspired by			https://freecurrencyapi.com
 package services
 
 import (
+	"github.com/mikietechie/gocurrenciesapi/internal/config"
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 )
 
@@ -39,4 +40,23 @@ func ChangeClientAPIKey(client *models.Client, reads int) error {
 		return err
 	}
 	return nil
+}
+
+func ReplenishClientsReads() error {
+	err := models.Db.Raw(`
+		UPDATE
+			clients
+			SET
+				reads_available=reads_available+?
+			WHERE
+				deleted_at IS NULL;
+	`, config.PERIODIC_READS).Error
+	return err
+}
+
+func CreateClientForUser(body *models.Client, user models.User) error {
+	body.UserID = int(user.ID)
+	body.ReadsAvailable = int(config.INITITIAL_READS)
+	err := models.Db.Create(&body).Error
+	return err
 }

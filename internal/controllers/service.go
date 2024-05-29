@@ -20,19 +20,6 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 )
 
-// Account			godoc
-// @Summary      	Account
-// @Description  	Gets Account
-// @Tags         	Service
-// @Produce      	json
-// @Success      	200   {object}  models.Client
-// @Router       	/api/v1/service/account [get]
-// @Security 		ApiKeyAuth
-func GetClientInfo(c *gin.Context) {
-	data := middleware.GetClientFromC(c)
-	responses.JSON200(c, data)
-}
-
 // Currencies State	godoc
 // @Summary      	Currencies State
 // @Description  	Gets Currencies State
@@ -47,6 +34,8 @@ func GetLive(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
+	// TODO: think of an intelligent way to dod this
+	// c.Header("Cache-Control", "max-age=60")
 	responses.JSON200(c, data)
 }
 
@@ -64,6 +53,7 @@ func GetCurrencies(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
+	c.Header("Cache-Control", "max-age=31560000")
 	responses.JSON200(c, data)
 }
 

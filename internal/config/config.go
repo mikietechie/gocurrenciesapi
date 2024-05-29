@@ -70,11 +70,31 @@ var envJWTTokenLifetime, _ = strconv.ParseInt(
 )
 var JWT_TOKEN_LIFETIME = time.Minute * time.Duration(envJWTTokenLifetime)
 
+// Client Reads Assignment
+var INITITIAL_READS, _ = strconv.ParseInt(
+	GetEnvOrDef("INITITIAL_READS", "10"),
+	10,
+	64,
+)
+var PERIODIC_READS, _ = strconv.ParseInt(
+	GetEnvOrDef("PERIODIC_READS", "10"),
+	10,
+	64,
+)
+var REPLANISH_PERIOD, _ = strconv.ParseInt(
+	GetEnvOrDef("REPLANISH_PERIOD", "30"),
+	10,
+	64,
+)
+
 func init() {
 	if RATES_LIFETIME <= 0 {
 		log.Fatalln("Environment 'RATES_LIFETIME' should be a positive integer")
 	}
 	if JWT_TOKEN_LIFETIME <= 0 {
 		log.Fatalln("Environment 'JWT_TOKEN_LIFETIME' should be a positive integer")
+	}
+	if PERIODIC_READS <= 0 {
+		log.Fatalln("Environment 'PERIODIC_READS' should be a positive integer")
 	}
 }
