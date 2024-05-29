@@ -22,7 +22,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Index"
                 ],
                 "summary": "Index",
                 "responses": {
@@ -257,12 +257,12 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Gets Credentials and Returns Auth Token",
+                "description": "Update client reads",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Client"
                 ],
                 "summary": "Client",
                 "parameters": [
@@ -411,7 +411,32 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount}": {
+        "/api/v1/service/account": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Gets Account",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Account",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Client"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}": {
             "get": {
                 "security": [
                     {
@@ -423,7 +448,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Service"
                 ],
                 "summary": "Conversion Endpoint",
                 "parameters": [
@@ -459,7 +484,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/currencies": {
+        "/api/v1/service/currencies": {
             "get": {
                 "security": [
                     {
@@ -471,7 +496,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Service"
                 ],
                 "summary": "Currencies List",
                 "responses": {
@@ -487,7 +512,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/historical": {
+        "/api/v1/service/historical": {
             "get": {
                 "security": [
                     {
@@ -499,7 +524,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Service"
                 ],
                 "summary": "Rate in Period Endpoint",
                 "parameters": [
@@ -542,7 +567,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/live": {
+        "/api/v1/service/live": {
             "get": {
                 "security": [
                     {
@@ -554,7 +579,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Service"
                 ],
                 "summary": "Currencies State",
                 "responses": {
@@ -567,7 +592,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/currencies/prevailing": {
+        "/api/v1/service/prevailing": {
             "get": {
                 "security": [
                     {
@@ -579,7 +604,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Auth"
+                    "Service"
                 ],
                 "summary": "Rate at Datetime Endpoint",
                 "parameters": [

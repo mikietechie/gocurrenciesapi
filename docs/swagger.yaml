@@ -146,7 +146,7 @@ paths:
             type: object
       summary: Index
       tags:
-      - Auth
+      - Index
   /api/v1/auth/deactivate:
     put:
       description: Deactivate user
@@ -257,7 +257,7 @@ paths:
       tags:
       - Client
     patch:
-      description: Gets Credentials and Returns Auth Token
+      description: Update client reads
       parameters:
       - description: structs.UpdateClientReadsBody JSON
         in: body
@@ -276,7 +276,7 @@ paths:
       - Bearer: []
       summary: Client
       tags:
-      - Auth
+      - Client
     post:
       description: Create New Client
       parameters:
@@ -381,7 +381,22 @@ paths:
       summary: Update Client
       tags:
       - Client
-  /api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount}:
+  /api/v1/service/account:
+    get:
+      description: Gets Account
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Client'
+      security:
+      - ApiKeyAuth: []
+      summary: Account
+      tags:
+      - Service
+  /api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}:
     get:
       description: Gets Conversion Endpoint
       parameters:
@@ -411,8 +426,8 @@ paths:
       - ApiKeyAuth: []
       summary: Conversion Endpoint
       tags:
-      - Auth
-  /api/v1/currencies/currencies:
+      - Service
+  /api/v1/service/currencies:
     get:
       description: Gets Currencies List
       produces:
@@ -428,8 +443,8 @@ paths:
       - ApiKeyAuth: []
       summary: Currencies List
       tags:
-      - Auth
-  /api/v1/currencies/historical:
+      - Service
+  /api/v1/service/historical:
     get:
       description: Gets Rate in Period Endpoint
       parameters:
@@ -464,8 +479,8 @@ paths:
       - ApiKeyAuth: []
       summary: Rate in Period Endpoint
       tags:
-      - Auth
-  /api/v1/currencies/live:
+      - Service
+  /api/v1/service/live:
     get:
       description: Gets Currencies State
       produces:
@@ -479,8 +494,8 @@ paths:
       - ApiKeyAuth: []
       summary: Currencies State
       tags:
-      - Auth
-  /api/v1/currencies/prevailing:
+      - Service
+  /api/v1/service/prevailing:
     get:
       description: Gets Rate at Datetime Endpoint
       parameters:
@@ -505,7 +520,7 @@ paths:
       - ApiKeyAuth: []
       summary: Rate at Datetime Endpoint
       tags:
-      - Auth
+      - Service
   /api/v1/users:
     get:
       description: List New User

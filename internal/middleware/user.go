@@ -27,7 +27,7 @@ func WithUser() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		err = models.Db.Model(user).First(&user, userID).Error
+		err = models.Db.Model(user).First(&user, "ID = ?", userID).Error
 		if err != nil {
 			responses.JSON403(c)
 			c.Abort()

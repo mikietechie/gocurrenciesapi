@@ -11,7 +11,10 @@ Inspired by			https://freecurrencyapi.com
 package main
 
 import (
+	"fmt"
+
 	"github.com/mikietechie/gocurrenciesapi/internal/initialize"
+	"github.com/mikietechie/gocurrenciesapi/internal/models"
 )
 
 // This is a file for writing Go Code Trials, since go has no REPL
@@ -20,5 +23,12 @@ import (
 func main() {
 	initialize.Init()
 	defer initialize.Tear()
-	// TODO: write and remove code
+	var user models.User
+	models.Db.First(&user, "email = ?", "su@mail.com")
+	fmt.Println(user.Email)
+	user.NewPassword = "password"
+	err := models.Db.Save(&user).Error
+	if err != nil {
+		fmt.Println("failed to set password")
+	}
 }

@@ -20,13 +20,26 @@ import (
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 )
 
+// Account			godoc
+// @Summary      	Account
+// @Description  	Gets Account
+// @Tags         	Service
+// @Produce      	json
+// @Success      	200   {object}  models.Client
+// @Router       	/api/v1/service/account [get]
+// @Security 		ApiKeyAuth
+func GetClientInfo(c *gin.Context) {
+	data := middleware.GetClientFromC(c)
+	responses.JSON200(c, data)
+}
+
 // Currencies State	godoc
 // @Summary      	Currencies State
 // @Description  	Gets Currencies State
-// @Tags         	Auth
+// @Tags         	Service
 // @Produce      	json
 // @Success      	200   {object}  structs.BeaconResponse
-// @Router       	/api/v1/currencies/live [get]
+// @Router       	/api/v1/service/live [get]
 // @Security 		ApiKeyAuth
 func GetExchangeRates(c *gin.Context) {
 	data, err := services.GetExchangeRates()
@@ -40,10 +53,10 @@ func GetExchangeRates(c *gin.Context) {
 // Currencies List        godoc
 // @Summary      Currencies List
 // @Description  Gets Currencies List
-// @Tags         Auth
+// @Tags         Service
 // @Produce      json
 // @Success      200   {object}  []string
-// @Router       /api/v1/currencies/currencies [get]
+// @Router       /api/v1/service/currencies [get]
 // @Security 	ApiKeyAuth
 func GetCurrencies(c *gin.Context) {
 	data, err := services.GetCurrencies()
@@ -57,13 +70,13 @@ func GetCurrencies(c *gin.Context) {
 // Conversion Endpoint        godoc
 // @Summary      Conversion Endpoint
 // @Description  Gets Conversion Endpoint
-// @Tags         Auth
+// @Tags         Service
 // @Produce      json
 // @Param        toCurrency path string true "To Currency"
 // @Param        fromCurrency path string true "From Currency"
 // @Param        amount path float64 true "Amount"
 // @Success      200   {object}  float64
-// @Router       /api/v1/currencies/convert/{toCurrency}/{fromCurrency}/{amount} [get]
+// @Router       /api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount} [get]
 // @Security 	ApiKeyAuth
 func GetConversion(c *gin.Context) {
 	toCurrency, _ := c.Params.Get("toCurrency")
@@ -89,12 +102,12 @@ func GetConversion(c *gin.Context) {
 // Rate at Datetime Endpoint        godoc
 // @Summary      Rate at Datetime Endpoint
 // @Description  Gets Rate at Datetime Endpoint
-// @Tags         Auth
+// @Tags         Service
 // @Produce      json
 // @Param        currency    query    string  true  "Currency Code"
 // @Param        timestamp   query    string  true  "Time Stamp"
 // @Success      200   {object}  models.Rate
-// @Router       /api/v1/currencies/prevailing [get]
+// @Router       /api/v1/service/prevailing [get]
 // @Security 	ApiKeyAuth
 func GetRateAt(c *gin.Context) {
 	var body structs.RateAtDateBody
@@ -110,13 +123,13 @@ func GetRateAt(c *gin.Context) {
 // Rate in Period Endpoint        godoc
 // @Summary      Rate in Period Endpoint
 // @Description  Gets Rate in Period Endpoint
-// @Tags         Auth
+// @Tags         Service
 // @Produce      json
 // @Param        currencies  query    []string  true  "Currency Code"
 // @Param        start       query    string    true  "Start"
 // @Param        end         query    string    true  "Start"
 // @Success      200   {object}  []models.Rate
-// @Router       /api/v1/currencies/historical [get]
+// @Router       /api/v1/service/historical [get]
 // @Security 	ApiKeyAuth
 func GetRatesInPeriod(c *gin.Context) {
 	var body structs.RatesInPeriodBody
@@ -133,7 +146,7 @@ func GetRatesInPeriod(c *gin.Context) {
 	responses.JSON200(c, data)
 }
 
-func CurrenciesRouter(r gin.RouterGroup) {
+func ServiceRouter(r gin.RouterGroup) {
 	r.Use(middleware.WithClient())
 	r.GET("/live", GetExchangeRates)
 	r.GET("/currencies", GetCurrencies)

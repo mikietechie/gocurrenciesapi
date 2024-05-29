@@ -64,6 +64,7 @@ func Logout(c *gin.Context) {
 // @Security     Bearer
 func Deactivate(c *gin.Context) {
 	go services.DeactivateUser(middleware.GetUserFromC(c))
+	go services.BlackListToken(c.Value("token").(jwt.Token))
 	responses.JSON200(c, true)
 }
 
@@ -130,12 +131,7 @@ func UpdateUserPassword(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	var user models.User
-	err = models.Db.First(&user, c.Param("id")).Error
-	if err != nil {
-		responses.JSON400(c, err.Error())
-		return
-	}
+	user := *middleware.GetUserFromC(c)
 	err = services.UpdateUserPassword(&user, body)
 	if err != nil {
 		responses.JSON400(c, err.Error())

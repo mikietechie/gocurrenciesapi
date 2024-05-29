@@ -12,17 +12,12 @@ package services
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/structs"
 )
 
 func UpdateUserPassword(user *models.User, body structs.UpdateUserPasswordPayload) error {
-	fmt.Println("body.CurrentPassword\t:", body.CurrentPassword)
-	fmt.Println("body.NewPassword\t:", body.NewPassword)
-	fmt.Println("body.NewPasswordConfirmation\t:", body.NewPasswordConfirmation)
-	fmt.Println("body.CheckPassword\t:", user.CheckPassword(body.CurrentPassword))
 	if !user.CheckPassword(body.CurrentPassword) {
 		return errors.New("passwords don't match")
 	}

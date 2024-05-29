@@ -27,8 +27,6 @@ type User struct {
 }
 
 func (user User) CheckPassword(password string) bool {
-	log.Println("UPssword\t:", user.Password)
-	log.Println("Password\t:", utils.Hash256(password))
 	return user.Password == utils.Hash256(password)
 }
 

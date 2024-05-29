@@ -50,7 +50,7 @@ func GetClients(c *gin.Context) {
 // @Security     Bearer
 func GetClient(c *gin.Context) {
 	var item models.Client
-	err := models.Db.Model(models.Client{}).First(&item, c.Param("id")).Error
+	err := models.Db.Model(models.Client{}).First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -70,7 +70,7 @@ func GetClient(c *gin.Context) {
 // @Security     Bearer
 func DeleteClient(c *gin.Context) {
 	var item models.Client
-	err := models.Db.First(&item, c.Param("id")).Error
+	err := models.Db.First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -123,7 +123,7 @@ func UpdateClient(c *gin.Context) {
 		return
 	}
 	var item models.Client
-	err = models.Db.First(&item, c.Param("id")).Error
+	err = models.Db.First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -138,8 +138,8 @@ func UpdateClient(c *gin.Context) {
 
 // Client        godoc
 // @Summary      Client
-// @Description  Gets Credentials and Returns Auth Token
-// @Tags         Auth
+// @Description  Update client reads
+// @Tags         Client
 // @Produce      json
 // @Param        payload  body      structs.UpdateClientReadsBody  true  "structs.UpdateClientReadsBody JSON"
 // @Success      200   {object}  models.Client
@@ -153,7 +153,7 @@ func AddClientReadsAvailable(c *gin.Context) {
 		return
 	}
 	var client models.Client
-	err = models.Db.First(&client, body.Client).Error
+	err = models.Db.First(&client, "ID = ?", body.Client).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -163,7 +163,6 @@ func AddClientReadsAvailable(c *gin.Context) {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	models.Db.Model(&client).Scan(&client)
 	responses.JSON200(c, client)
 }
 

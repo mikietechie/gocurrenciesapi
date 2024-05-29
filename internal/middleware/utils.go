@@ -19,3 +19,8 @@ func GetUserFromC(c *gin.Context) *models.User {
 	user := c.Value("user").(*models.User)
 	return user
 }
+
+func GetClientFromC(c *gin.Context) *models.Client {
+	client := c.Value("client").(*models.Client)
+	return client
+}

@@ -49,7 +49,7 @@ func GetUsers(c *gin.Context) {
 // @Security     Bearer
 func GetUser(c *gin.Context) {
 	var item models.User
-	err := models.Db.Model(models.User{}).First(&item, c.Param("id")).Error
+	err := models.Db.Model(models.User{}).First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -69,7 +69,7 @@ func GetUser(c *gin.Context) {
 // @Security     Bearer
 func DeleteUser(c *gin.Context) {
 	var item models.User
-	err := models.Db.First(&item, c.Param("id")).Error
+	err := models.Db.First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
@@ -122,7 +122,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 	var item models.User
-	err = models.Db.First(&item, c.Param("id")).Error
+	err = models.Db.First(&item, "ID = ?", c.Param("id")).Error
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
