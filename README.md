@@ -19,12 +19,12 @@ I am fluent in English and decent in Russian.
 
 A Fintech API. This is a backend server for fetching, storing, and serving currency and rates data. Examples of companies that provide this service are Microsoft, Google, Polygon and Beacon. My motivation for making this API is to prove how well I understand backend development, how much I know about APIs, Security, Caching, Optimazation and Documentation. I also wish to present it as a portfolio project since I am trying to move from being a fullstack Python JavaScript developer to a "Real" backend developer who is worth paying thousands of dollars.
 
-Gophers is the name given to Golang Developers. These developers generally look happier, healthier and wealtier than other developers. (Why because Go is simple unlike Rust, well compensated unlike me, has typing unlike Python, good errors style unlike JavaScript and compiles fast unlike Java which takes five a tenth of a developers life.)
+Gophers is the name given to Golang Developers. These developers generally look happier, healthier and wealtier than other developers. (Why because Go is simple unlike Rust, well compensated unlike me, has typing unlike Python, good errors style unlike JavaScript and compiles fast unlike Java which takes a tenth of a developers life.)
 
 ## Technologies Used
 
 Programming language: Golang
-The system is built using the Go programming language. Golang is a modern, super fast, statically typed programming  language developed by Google. It is used in building Cloud Infrastructure, High Performance Web Servers and Developer Tools. Golang powers some of our favourite tools like Docker and Traefik. I chose Golang because I wanted to make the API as fast as possible and also use something that is not Python or JavaScript.
+The system is built using the Go programming language. Golang is a modern, super fast, statically typed programming  language developed by Google. It is used in building cloud infrastructure, high performance web servers and developer tools. Golang powers some of our favourite tools like Docker and Traefik. I chose Golang because I wanted to make the API as fast as possible and also use something that is not Python or JavaScript.
 
 Web Framework: Gin
 Golang provides a decent internal HTTP library that can be used for web server development, but I chose to use Gin (Go-Gin). Gin is a blazing fast Golang backend web framework. Me coming from Python and JavaScript it feels like Express JS or Fast API. It has all the features of a modern simplistic, unopinionated web framework. It supports data binding, easy serialization, crash handling, middlewares e.t.c . With Gin, the choices of authentication, database, templating and caching are left to the developer. I chose Gin because it feels like Express JS or Flask, (honestly I should have chosen Fiber)
@@ -38,10 +38,10 @@ Document Storage: Mongo
 MongoDB is an open source NoSQL database. It is actually the most popular. Personally I do not like NoSQL databases, but they are fast and efficient when it comes to storing large blobs of data because of the way they are built, they are also easier to scale should the need arise, plus I needed to prove that yes I do know and understand what a collection and a document is.
 
 Caching: Redis
-Redis is an open source cache software. Redis stores data in key value pairs. You can read and write data to Redis way faster than you would to MongoDB or Postgres. Redis will give your Server massive perfomance gains. I chose Redis because it is easy to setup and manage.
+Redis is an open source cache software. Redis stores data in key value pairs. You can read and write data to Redis way faster than you would to MongoDB or Postgres. Redis will give your server massive perfomance gains. I chose Redis because it is easy to setup and manage.
 
 API Documentation: Swagger.
-Swagger is a technology for documenting APIs. Using swagger I can export client libraries for my API, making it easy for users to consume my API using their favourite languages, Python, TypeScript e.t.c . I chose Swagger over alternatives like Redoc, because Golang has good support for Swagger and I have also used Swagger with Fast API
+Swagger is a technology for documenting APIs. Using Swagger I can export client libraries for my API, making it easy for users to consume my API using their favourite languages, Python, TypeScript e.t.c . I chose Swagger over alternatives like Redoc, because Golang has good support for Swagger and I have also used Swagger with Fast API
 
 Data Source: Beacon Currency API
 Beacon is a fintech company providing data services through an API. I chose Beacon because it is the first fintech data service I could access from the beautiful city of St Petersburg Russia.
@@ -64,7 +64,7 @@ The system has 3 data models User, Client and Rate.
 
 ### Workflow
 
-Users signup and have the role of clients. On passing Signup a client is created for the user. The client has an API Key and stores the number of API hits which is decremented for every hit and can be replenished when user buys some hits. Our service exposes different endpoints to client softwares.
+Users signup and have the role of client. On passing Signup a user can create a client from the web dashboard. The client has an API Key and stores the number of API hits which is decremented for every hit and can be replenished when user buys some hits. Our service exposes different endpoints to client softwares.
 
 The user owns the client.
 
@@ -114,11 +114,11 @@ Rates are stored in Mongo DB. These are fetched from an external API and stored 
 
 ### Authentication
 
-Users can register and they are auto assigned the role of Client. A client is created for the user. Users login using email and password then they get their user details and a JWT token. This token is used for accessing the user dashboard. The user can access and alter this client from the user dashboard. Here they can also check how many hits  they have left. User client softwares access the API using an API key which is passed as a query parameter.
+Users can register and they are auto assigned the role of client. A client is created for the user. Users login using email and password then they get their user details and a JWT token. This token is used for accessing the user dashboard. The user can access and alter this client from the user dashboard. Here they can also check how many hits  they have left. User client softwares access the API using an API key which is passed as a query parameter.
 
 Admins have the user role Admin. These users manage the system, and they can create more admins.
 
-For more technical details please go through the swagger API.
+For more technical details please go through the Swagger API.
 
 ## Options for future development
 
@@ -142,10 +142,10 @@ Ok here is the point, I do know how to use AWS, unfortunately I do not have cert
 Instead of runnig all my services from one `docker-compose.yml` file, I will have to use an infinitely scalable MongoDB, Redis and Postgres service provided by a good cloud service provider. (Yandex Cloud, VK Cloud, AWS, Google Cloud, Alibaba, Microsoft Azure e.t.c). Truth be told we all hate these giant tech companies but we can't do without them. (Thanks to Microsoft Github, Vs Code, Google Go, Yandex, Sberbank and Ubuntu) I was able to create this project.
 
 To make the system more efficient we might try to implement what is called database sharding.
-To add more spice we can deploy our service at different Geo Locations and use a giant reverse proxy.
+To add more spice we can deploy our service at different geo Locations and use a giant reverse proxy.
 We can also use something called Kubernites to launch multiple instances of our server according to usage demand.
 
-Once I do this I will lose a lot of money to these big tech companies, and I will introduce a lot of complexity to my innocent app, I might even have to end up hiring a Devops Engineer, and an Accountant to handle my Cloud Service Provide invoices and taxes. I will go broke, then they will look for me, find me and ask to sell my properties, unfortunately I do not own any properties except for my precious laptop Lenovo 7th Gen, 16Gb Ram, 1Tb SSD (It's a beast. I got it as a gift from my former boss), then they will find my dad who still has custody over me and sell his mansion located in a porche surbub in Southern Africa where I come from.
+Once I do this, I will lose a lot of money to these big tech companies, and I will introduce a lot of complexity to my innocent app, I might even have to end up hiring a Devops Engineer, and an Accountant to handle my Cloud Service invoices and taxes. I will go broke, then they will look for me, find me and ask to sell my properties, unfortunately I do not own any properties except for my precious laptop Lenovo 7th Gen, 16Gb Ram, 1Tb SSD (It's a beast. I got it as a gift from my former boss), then they will find my dad who still has custody over me and sell his mansion located in a porche surbub in Southern Africa where I come from.
 
 ## Challenges faced
 
