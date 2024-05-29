@@ -503,6 +503,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/reports/users-clients": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Users with Clients Report",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Users Clients Report",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/structs.UsersClientsReportRow"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/responses.Error400Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}": {
             "get": {
                 "security": [
@@ -1095,6 +1129,35 @@ const docTemplate = `{
                 },
                 "new_password_confirmation": {
                     "type": "string"
+                }
+            }
+        },
+        "structs.UsersClientsReportRow": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "client_id": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "reads_available": {
+                    "type": "integer"
+                },
+                "reads_used": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         }

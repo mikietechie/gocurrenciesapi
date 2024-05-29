@@ -39,14 +39,13 @@ func RunServer() {
 	// Routing
 	api_router := server.Group("/api/v1")
 	controllers.ServiceRouter(*api_router.Group("/service"))
+	controllers.ReportsRouter(*api_router.Group("/reports"))
 	controllers.AccountRouter(*api_router.Group("/account"))
 	controllers.AuthRouter(*api_router.Group("/auth"))
 	controllers.UsersRouter(*api_router.Group("/users"))
 	controllers.ClientsRouter(*api_router.Group("/clients"))
 	controllers.IndexRouter(*api_router.Group("/"))
-	if config.DEV {
-		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	}
+	server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// Run Server
 	ADDRESS := "http://" + config.SERVER_ADDRESS
 	log.Println(ADDRESS)

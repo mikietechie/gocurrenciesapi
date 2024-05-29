@@ -11,6 +11,8 @@ Inspired by			https://freecurrencyapi.com
 package services
 
 import (
+	"log"
+
 	"github.com/mikietechie/gocurrenciesapi/internal/config"
 	"github.com/mikietechie/gocurrenciesapi/internal/models"
 )
@@ -51,6 +53,11 @@ func ReplenishClientsReads() error {
 			WHERE
 				deleted_at IS NULL;
 	`, config.PERIODIC_READS).Error
+	if err != nil {
+		log.Println("Error: ", err.Error())
+	} else {
+		log.Println("Success: ReplenishClientsReads")
+	}
 	return err
 }
 

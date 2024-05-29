@@ -13,27 +13,26 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mikietechie/gocurrenciesapi/internal/middleware"
-	"github.com/mikietechie/gocurrenciesapi/internal/models"
 	"github.com/mikietechie/gocurrenciesapi/internal/responses"
+	"github.com/mikietechie/gocurrenciesapi/internal/services"
 )
 
-// List Client   godoc
-// @Summary      List Client
-// @Description  List New Client
-// @Tags         Client
-// @Produce      json
-// @Success      200   {array}  models.Client
-// @Failure      400   {object}  responses.Error400Response
-// @Router       /api/v1/clients [get]
-// @Security     Bearer
+// Users Clients Report godoc
+// @Summary      		Users Clients Report
+// @Description  		Users with Clients Report
+// @Tags         		Reports
+// @Produce      		json
+// @Success      		200   {array}  structs.UsersClientsReportRow
+// @Failure      		400   {object}  responses.Error400Response
+// @Router       		/api/v1/reports/users-clients [get]
+// @Security     		Bearer
 func GetUsersClientsReport(c *gin.Context) {
-	var items []models.Client
-	err := models.Db.Model(models.Client{}).Preload("User").Find(&items).Error
+	data, err := services.GetUsersClientsReportData()
 	if err != nil {
 		responses.JSON400(c, err.Error())
 		return
 	}
-	responses.JSON200(c, items)
+	responses.JSON200(c, data)
 }
 
 func ReportsRouter(r gin.RouterGroup) {

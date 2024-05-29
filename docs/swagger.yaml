@@ -128,6 +128,25 @@ definitions:
     - new_password
     - new_password_confirmation
     type: object
+  structs.UsersClientsReportRow:
+    properties:
+      active:
+        type: boolean
+      client_id:
+        type: integer
+      created_at:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      reads_available:
+        type: integer
+      reads_used:
+        type: integer
+      user_id:
+        type: integer
+    type: object
 info:
   contact: {}
 paths:
@@ -435,6 +454,27 @@ paths:
       summary: Update Client
       tags:
       - Client
+  /api/v1/reports/users-clients:
+    get:
+      description: Users with Clients Report
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/structs.UsersClientsReportRow'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      security:
+      - Bearer: []
+      summary: Users Clients Report
+      tags:
+      - Reports
   /api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}:
     get:
       description: Gets Conversion Endpoint
