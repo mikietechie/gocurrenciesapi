@@ -8,12 +8,9 @@
 
 FROM golang:latest
 
-WORKDIR /app
-
-COPY . /app
-
+COPY . .
 RUN go mod download
+EXPOSE 8000
 
 RUN go run internal/cmd/su/main.go
-
-ENTRYPOINT [ "go", "run", "main.go"]
+ENTRYPOINT [ "go", "run", "main.go" ]

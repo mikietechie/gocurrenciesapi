@@ -11,3 +11,4 @@
 *.db
 /data
 /dockervolume
+test.Dockerfile
