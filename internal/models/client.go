@@ -35,7 +35,7 @@ func (client Client) GetReadsLeft() int {
 }
 
 func (client Client) HasReads() bool {
-	return client.GetReadsLeft() <= 0
+	return client.GetReadsLeft() > 0
 }
 
 func (client *Client) BeforeCreate(tx *gorm.DB) (err error) {

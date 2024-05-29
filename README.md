@@ -6,6 +6,8 @@ touch .env
 docker compose -f "docker-compose.yml" up -d --build
 ```
 
+![System Architecture](photo_5386419087388825430_y-1.jpg)
+
 ## About Me
 
 Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
@@ -30,6 +32,8 @@ Golang provides a decent internal HTTP library that can be used for web server d
 Database: Postgres
 Postgres is an open source Relational Database Management System. Postgres is quite popular in the Python community where I come from. It has advanced features like text search, json support and multi schema support. SQL Relational databases are greate because querying data using SQL is simple and clean as compared to their NoSQL counterparts. I chose Postgres because I am used to working with Postgres and it looks like the industry standard as well. Gone are the days of MySQL and MS Server.
 
+Please note that two functions a job and a report use Raw SQL. Yes I am a SQL Wizard.
+
 Document Storage: Mongo
 MongoDB is an open source NoSQL database. It is actually the most popular. Personally I do not like NoSQL databases, but they are fast and efficient when it comes to storing large blobs of data because of the way they are built, they are also easier to scale should the need arise, plus I needed to prove that yes I do know and understand what a collection and a document is.
 
@@ -52,11 +56,19 @@ TODO
 
 The system has 3 data models User, Client and Rate.
 
+![alt text](photo_5386419087388825430_y.jpg)
+
+![An Image of the API Documentation](image-1.png)
+
+![An Image of the database schema](schema.png)
+
 ### Workflow
 
 Users signup and have the role of clients. On passing Signup a client is created for the user. The client has an API Key and stores the number of API hits which is decremented for every hit and can be replenished when user buys some hits. Our service exposes different endpoints to client softwares.
 
-The client can:
+The user owns the client.
+
+The client can (using an API Key):
 
 1. Fetch prevailing exchange rates for all internationally recognized currencies national and crypto.
 2. Fetch a list of all currency names
@@ -64,7 +76,31 @@ The client can:
 4. Query the rate at a given point in time.
 5. Query the time series data for selected currencies in a given time period
 
-From an Admin Dashboard Users with the admin role can add more manage users, clients and client top ups.
+The user can (using a bearer token):
+
+1. Register
+2. Login
+3. Update Credentials
+4. Logout (and Blacklist Current token)
+5. Deactivate Account
+6. Create a Client
+7. View client
+8. Regenerate API KEYS
+
+The admin can (usinf JWT Bearer Token):
+
+1. Create, read, update and delete users.
+2. Top up Client Reads
+3. Can access reports
+
+The system can (using callbacks and background jobs, middleware)
+
+1. Replenish client reads periodically
+2. Periodically, fetch and store in Database and cache live rates
+3. Clean up expired black listed tokens (i.e Redis just expires and deletes them)
+4. Filter out users by auth tokens and roles
+5. Rate limit clients
+6. Filter out clients by the domain names set for the client or use wildcards
 
 ### Configuration
 

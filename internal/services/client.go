@@ -64,6 +64,9 @@ func ReplenishClientsReads() error {
 func CreateClientForUser(body *models.Client, user models.User) error {
 	body.UserID = int(user.ID)
 	body.ReadsAvailable = int(config.INITITIAL_READS)
+	if body.Domains == "" {
+		body.Domains = "*"
+	}
 	err := models.Db.Create(&body).Error
 	return err
 }

@@ -143,6 +143,7 @@
 <span class="hljs-built_in">touch</span> .<span class="hljs-built_in">env</span>
 docker compose -f <span class="hljs-string">&quot;docker-compose.yml&quot;</span> up -d --build
 </code></pre>
+<p><img src="file:////home/su/projects/mike/gocurrenciesapi/photo_5386419087388825430_y-1.jpg" alt="System Architecture"></p>
 <h2 id="about-me">About Me</h2>
 <p>Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
 Going straight to the point, shouting at the top of my voice, furiously punching my keyboard: <em>I AM LOOKING FOR A DECENT JOB AS A JUNIOR OR MID LEVEL SOFTWARE ENGINEER <a href="malito:mzinyoni7@outlook.com">malito:mzinyoni7@outlook.com</a></em>.
@@ -158,6 +159,7 @@ The system is built using the Go programming language. Golang is a modern, super
 Golang provides a decent internal HTTP library that can be used for web server development, but I chose to use Gin (Go-Gin). Gin is a blazing fast Golang backend web framework. Me coming from Python and JavaScript it feels like Express JS or Fast API. It has all the features of a modern simplistic, unopinionated web framework. It supports data binding, easy serialization, crash handling, middlewares e.t.c . With Gin, the choices of authentication, database, templating and caching are left to the developer. I chose Gin because it feels like Express JS or Flask, (honestly I should have chosen Fiber)</p>
 <p>Database: Postgres
 Postgres is an open source Relational Database Management System. Postgres is quite popular in the Python community where I come from. It has advanced features like text search, json support and multi schema support. SQL Relational databases are greate because querying data using SQL is simple and clean as compared to their NoSQL counterparts. I chose Postgres because I am used to working with Postgres and it looks like the industry standard as well. Gone are the days of MySQL and MS Server.</p>
+<p>Please note that two functions a job and a report use Raw SQL. Yes I am a SQL Wizard.</p>
 <p>Document Storage: Mongo
 MongoDB is an open source NoSQL database. It is actually the most popular. Personally I do not like NoSQL databases, but they are fast and efficient when it comes to storing large blobs of data because of the way they are built, they are also easier to scale should the need arise, plus I needed to prove that yes I do know and understand what a collection and a document is.</p>
 <p>Caching: Redis
@@ -172,9 +174,13 @@ JWT (JSON Web Token) is an authentication protocol where data is encoded by a ke
 TODO</p>
 <h2 id="architecture">Architecture</h2>
 <p>The system has 3 data models User, Client and Rate.</p>
+<p><img src="file:////home/su/projects/mike/gocurrenciesapi/photo_5386419087388825430_y.jpg" alt="alt text"></p>
+<p><img src="file:////home/su/projects/mike/gocurrenciesapi/image-1.png" alt="An Image of the API Documentation"></p>
+<p><img src="file:////home/su/projects/mike/gocurrenciesapi/schema.png" alt="An Image of the database schema"></p>
 <h3 id="workflow">Workflow</h3>
 <p>Users signup and have the role of clients. On passing Signup a client is created for the user. The client has an API Key and stores the number of API hits which is decremented for every hit and can be replenished when user buys some hits. Our service exposes different endpoints to client softwares.</p>
-<p>The client can:</p>
+<p>The user owns the client.</p>
+<p>The client can (using an API Key):</p>
 <ol>
 <li>Fetch prevailing exchange rates for all internationally recognized currencies national and crypto.</li>
 <li>Fetch a list of all currency names</li>
@@ -182,7 +188,32 @@ TODO</p>
 <li>Query the rate at a given point in time.</li>
 <li>Query the time series data for selected currencies in a given time period</li>
 </ol>
-<p>From an Admin Dashboard Users with the admin role can add more manage users, clients and client top ups.</p>
+<p>The user can (using a bearer token):</p>
+<ol>
+<li>Register</li>
+<li>Login</li>
+<li>Update Credentials</li>
+<li>Logout (and Blacklist Current token)</li>
+<li>Deactivate Account</li>
+<li>Create a Client</li>
+<li>View client</li>
+<li>Regenerate API KEYS</li>
+</ol>
+<p>The admin can (usinf JWT Bearer Token):</p>
+<ol>
+<li>Create, read, update and delete users.</li>
+<li>Top up Client Reads</li>
+<li>Can access reports</li>
+</ol>
+<p>The system can (using callbacks and background jobs, middleware)</p>
+<ol>
+<li>Replenish client reads periodically</li>
+<li>Periodically, fetch and store in Database and cache live rates</li>
+<li>Clean up expired black listed tokens (i.e Redis just expires and deletes them)</li>
+<li>Filter out users by auth tokens and roles</li>
+<li>Rate limit clients</li>
+<li>Filter out clients by the domain names set for the client or use wildcards</li>
+</ol>
 <h3 id="configuration">Configuration</h3>
 <p>Me coming from Python Django, the app has a config file that loads environment variables from the environment and an optional .env file. Here we set postgres, mongo, redis connection parameters, server environment, hashing secret key e.t.c .</p>
 <h3 id="data-storage-and-relationships">Data Storage and Relationships</h3>
