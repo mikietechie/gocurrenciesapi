@@ -56,11 +56,11 @@ TODO
 
 The system has 3 data models User, Client and Rate.
 
-![alt text](photo_5386419087388825430_y.jpg)
+![System Architecture](https://github.com/mikietechie/gocurrenciesapi/blob/main/files/architecture.jpg)
 
-![An Image of the API Documentation](image-1.png)
+![An Image of the API Documentation](https://github.com/mikietechie/gocurrenciesapi/blob/main/files/swagger.png)
 
-![An Image of the database schema](schema.png)
+![An Image of the database schema](https://github.com/mikietechie/gocurrenciesapi/blob/main/files/schema.png)
 
 ### Workflow
 
