@@ -12,7 +12,6 @@ package config
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strconv"
 	"time"
@@ -30,28 +29,16 @@ var ENV = GetEnvOrDef("ENV", "PROD")
 var DEV = ENV == "DEV"
 var SERVER_ADDRESS = GetEnvOrDef("SERVER_ADDRESS", "0.0.0.0:8000")
 
-/* POSTGRES SQLite */
-var dns = fmt.Sprintf(
-	"postgres://%s:%s@%s:%s/%s",
-	GetEnvOrDef("POSTGRES_USER", "postgres"),
-	GetEnvOrDef("POSTGRES_PASSWORD", "localhost"),
-	GetEnvOrDef("DB_HOST", "localhost"),
-	GetEnvOrDef("DB_PORT", "5432"),
-	GetEnvOrDef("POSTGRES_DB", "gocurrenciesapidb"),
-)
+/* POSTGRES MONGO REDIS */
 var DATABASE_CONNECTION = GetEnvOrDef(
-	"DATABASE_CONNECTION",
-	dns,
+	"POSTGRES_CONNECTION",
+	"postgres://pg:pass@localhost:5432/db",
 )
-
-/* Mongo DB */
 var MONGO_CONNECTION = GetEnvOrDef(
 	"MONGO_CONNECTION",
 	"mongodb://localhost:27017/?authSource=admin",
 )
-var MONGO_DBNAME = GetEnvOrDef("MONGO_DBNAME", "gocurrenciesapi")
-
-/* REDIS*/
+var MONGO_DBNAME = GetEnvOrDef("MONGO_DBNAME", "db")
 var REDIS_CONNECTION = GetEnvOrDef("REDIS_CONNECTION", "localhost:6379")
 
 /*BEACON DATA SOURCE*/

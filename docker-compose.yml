@@ -1,10 +1,10 @@
-# Date Created		1 May 2024
+# Date Created	1 May 2024
 # Author				Mike Z
-# Email				mzinyoni7@outlook.com
+# Email				  mzinyoni7@outlook.com
 # Website				https://mikeio.web.app
 # Status				Looking for a job!
-# Description			A Fintech Data Service
-# Inspired by			https://freecurrencyapi.com
+# Description		A Fintech Data Service
+# Inspired by		https://freecurrencyapi.com
 
 # docker compose -f "docker-compose.yml" up -d --build
 # docker compose -f "docker-compose.yml" down
@@ -55,11 +55,6 @@ services:
       - cache
       - db
       - mongodb
-    environment:
-      - SERVER_ADDRESS=0.0.0.0:8000
-      - REDIS_CONNECTION=cache:6379
-      - DB_HOST=db
-      - MONGO_CONNECTION=mongodb://localhost:27017/?authSource=admin
 
   cron:
     build:
@@ -71,11 +66,6 @@ services:
       - cache
       - db
       - mongodb
-    environment:
-      - SERVER_ADDRESS=0.0.0.0:8000
-      - REDIS_CONNECTION=cache:6379
-      - DB_HOST=db
-      - MONGO_CONNECTION=mongodb://localhost:27017/?authSource=admin
 
   cache:
     restart: unless-stopped
