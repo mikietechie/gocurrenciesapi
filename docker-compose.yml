@@ -43,7 +43,7 @@ services:
 
   app:
     build:
-      context: .
+      context: src
       dockerfile: Dockerfile
     expose:
       - 8000
@@ -58,7 +58,7 @@ services:
 
   cron:
     build:
-      context: .
+      context: src
       dockerfile: cron.Dockerfile
     env_file:
       - .env
