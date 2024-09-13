@@ -9,7 +9,7 @@ docker compose -f "docker-compose.yml" up -d --build
 ## About Me
 
 Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
-Going straight to the point, shouting at the top of my voice, furiously punching my keyboard: *I AM LOOKING FOR A DECENT JOB AS A JUNIOR OR MID LEVEL SOFTWARE ENGINEER <malito:mzinyoni7@outlook.com>*.
+Going straight to the point, shouting at the top of my voice, furiously punching my keyboard: *I AM LOOKING FOR A DECENT JOB AS A JUNIOR OR MID LEVEL SOFTWARE ENGINEER <mzinyoni7@outlook.com>*.
 Back to calm, I am a self taught developer but I did go to Software Engineering University as well. I have 7+ years of computer programming experience and four of them being proffessional work experience. I have written software that processed millions of dollars *i.e I am not a millionnaire, I was paid slightly less than 10k*.
 I am fluent in English and decent in Russian.
 
@@ -151,9 +151,9 @@ Once I do this, I will lose a lot of money to these big tech companies, and I wi
 
 1. Being new to Go I had a hard time choosing which HTTP web frame work to use between Gin and Fiber. I guess I spent two days making that descision. Gin is more popular and mature, whilst Fiber is like a better version of Gin. It's like choosing between Flask and FastAPI.
 2. For some weird reason I had a hard time connecting to Postgres. before you shout at me I have been connecting to Postgres using Python and JavaScript for about 5 years. I first wrote the code on my own, it failed, then copied it from the official docs, guess what it failed again. It turns out the problem was with my pre-existing Docker databases.
-3. Structuring the code. Unlike Django, Angular and Nest JS. Golang Gin does not give you a predifined way to structure the project. In my journey to learn Go I met way to many structures and I ended up confused. I tried to take the best from all of them.
-4. Lack of time, I did not have enough time per day to dedicate to this project. I work 8 hours a day as a Python Backend Developer. (I work on peripheral services only, because I cannot understand properly the language used in my city of residance)
-5. *I had no one to give me feedback as I was developing this system. I have 4 years of experience in developing production grade Python JavaScript software, but I have always worked under the watch of an alpha male, a senior software engineer, a 10x developer, a seasoned developer. Truth be told the people who hold these titles have invaluable experience, they know everything, they have seen everything.*
+3. Structuring the code. Unlike Django, Angular and Nest JS. Golang Gin does not give you a predefined way to structure the project. In my journey to learn Go I met way to many structures and I ended up confused. I tried to take the best from all of them.
+4. Lack of time, I did not have enough time per day to dedicate to this project. I work 8 hours a day as a Python Backend Developer. (I work on peripheral services only, because I cannot understand properly the language used in my city of residence)
+5. *I had no one to give me feedback as I was developing this system. I have 4 years of experience in developing production grade Python JavaScript systems, but I have always worked under the watch of an alpha male, a senior software engineer, a 10x developer, a seasoned developer. Truth be told the people who hold these titles have invaluable experience, they know everything, they have seen everything.* Shout out to my former manager Caleb & my managers Stepan & Julian.
 6. It looks like I do not clearly understand how Go Contexts work.
 
 ## Conclusion
