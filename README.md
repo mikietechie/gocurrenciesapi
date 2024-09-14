@@ -10,7 +10,7 @@ docker compose -f "docker-compose.yml" up -d --build
 
 Hello (здравствуйте), my name is Mike Z, a 22 y.o Python, TypeScript, Golang programmer based in St Petersburg Europe.
 Going straight to the point, shouting at the top of my voice, furiously punching my keyboard: *I AM LOOKING FOR A DECENT JOB AS A JUNIOR OR MID LEVEL SOFTWARE ENGINEER <mzinyoni7@outlook.com>*.
-Back to calm, I am a self taught developer but I did go to Software Engineering University as well. I have 7+ years of computer programming experience and four of them being proffessional work experience. I have written software that processed millions of dollars *i.e I am not a millionnaire, I was paid slightly less than 10k*.
+Back to calm, I am a self taught developer but I went Software Engineering University as well. I have 7+ years of computer programming experience and four of them being proffessional work experience. I have written software that processed millions of dollars *i.e I am not a millionnaire, I was paid slightly less than 10k*.
 I am fluent in English and decent in Russian.
 
 ![System Overview](https://github.com/mikietechie/gocurrenciesapi/blob/main/files/architecture.jpg)
@@ -30,7 +30,7 @@ Web Framework: Gin
 Golang provides a decent internal HTTP library that can be used for web server development, but I chose to use Gin (Go-Gin). Gin is a blazing fast Golang backend web framework. Me coming from Python and JavaScript it feels like Express JS or Fast API. It has all the features of a modern simplistic, unopinionated web framework. It supports data binding, easy serialization, crash handling, middlewares e.t.c . With Gin, the choices of authentication, database, templating and caching are left to the developer. I chose Gin because it feels like Express JS or Flask, (honestly I should have chosen Fiber)
 
 Database: Postgres
-Postgres is an open source Relational Database Management System. Postgres is quite popular in the Python community where I come from. It has advanced features like text search, json support and multi schema support. SQL Relational databases are greate because querying data using SQL is simple and clean as compared to their NoSQL counterparts. I chose Postgres because I am used to working with Postgres and it looks like the industry standard as well. Gone are the days of MySQL and MS Server.
+Postgres is an open source Relational Database Management System. Postgres is quite popular in the Python community where I come from. It has advanced features like text search, JSON support and multi schema support. SQL Relational databases are great because querying data using SQL is simple and clean as compared to their NoSQL counterparts. I chose Postgres because I am used to working with Postgres and it looks like the industry standard as well. Gone are the days of MySQL and MS Server.
 
 Please note that two functions a job and a report use Raw SQL. Yes I am a SQL Wizard.
 
@@ -70,7 +70,7 @@ The user owns the client.
 
 The client can (using an API Key):
 
-1. Fetch prevailing exchange rates for all internationally recognized currencies national and crypto.
+1. Fetch prevailing exchange rates for most recognized  national currencies and crypto.
 2. Fetch a list of all currency names
 3. Convert from one currency to another a given amount.
 4. Query the rate at a given point in time.
