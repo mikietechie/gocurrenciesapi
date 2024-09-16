@@ -38,6 +38,7 @@ func RunServer() {
 
 	// Routing
 	api_router := server.Group("/api/v1")
+	controllers.RoomsRouter(*api_router.Group("/rooms"))
 	controllers.ServiceRouter(*api_router.Group("/service"))
 	controllers.ReportsRouter(*api_router.Group("/reports"))
 	controllers.AccountRouter(*api_router.Group("/account"))

@@ -52,6 +52,25 @@ definitions:
       value:
         type: number
     type: object
+  models.RoomUserModel:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      expires:
+        description: Room    RoomModel `json:"-"`
+        type: string
+      id:
+        type: integer
+      roomID:
+        description: User    UserModel `json:"-"`
+        type: integer
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+    type: object
   models.User:
     properties:
       active:
@@ -98,12 +117,47 @@ definitions:
             $ref: '#/definitions/structs.BeaconRates'
         type: object
     type: object
+  structs.CheckInBody:
+    properties:
+      roomUid:
+        type: string
+      userUid:
+        type: string
+    required:
+    - roomUid
+    - userUid
+    type: object
+  structs.ExtendBody:
+    properties:
+      expires:
+        type: string
+      userRoomID:
+        type: integer
+    required:
+    - expires
+    - userRoomID
+    type: object
   structs.LoginPayload:
     properties:
       email:
         type: string
       password:
         type: string
+    type: object
+  structs.RoomUsers:
+    properties:
+      roomID:
+        type: integer
+      roomUid:
+        type: string
+      users:
+        items:
+          $ref: '#/definitions/structs.UserInRoom'
+        type: array
+    required:
+    - roomID
+    - roomUid
+    - users
     type: object
   structs.UpdateClientReadsBody:
     properties:
@@ -128,6 +182,28 @@ definitions:
     - new_password
     - new_password_confirmation
     type: object
+  structs.UserInRoom:
+    properties:
+      created_at:
+        type: string
+      expires:
+        type: string
+      id:
+        type: integer
+      userID:
+        type: integer
+      userName:
+        type: string
+      userUid:
+        type: string
+    required:
+    - created_at
+    - expires
+    - id
+    - userID
+    - userName
+    - userUid
+    type: object
   structs.UsersClientsReportRow:
     properties:
       active:
@@ -148,7 +224,12 @@ definitions:
         type: integer
     type: object
 info:
-  contact: {}
+  contact:
+    email: mzinyoni7
+    name: Mike Zinyoni
+  description: Go currencies API
+  title: Go Currencies API
+  version: "0.1"
 paths:
   /api/v1:
     get:
@@ -475,6 +556,69 @@ paths:
       summary: Users Clients Report
       tags:
       - Reports
+  /api/v1/rooms/check-in:
+    post:
+      description: Register New Client
+      parameters:
+      - description: CheckIn JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.CheckInBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RoomUserModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      summary: Check In
+      tags:
+      - rooms
+  /api/v1/rooms/extend:
+    patch:
+      description: Update users stay in room
+      parameters:
+      - description: CheckIn JSON
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/structs.ExtendBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RoomUserModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responses.Error400Response'
+      summary: Extend
+      tags:
+      - rooms
+  /api/v1/rooms/rooms-users:
+    get:
+      description: Get rooms and users in them
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/structs.RoomUsers'
+            type: array
+      summary: Rooms Users
+      tags:
+      - rooms
   /api/v1/service/convert/{toCurrency}/{fromCurrency}/{amount}:
     get:
       description: Gets Conversion Endpoint
